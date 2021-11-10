@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4A2925F1-FC67-4C83-800B-628145681C26}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Do_an_1</RootNamespace>
+    <AssemblyName>Do an 1</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessLayer\ChisodienBLL.cs" />
+    <Compile Include="BusinessLayer\CongtodienBLL.cs" />
+    <Compile Include="BusinessLayer\HoadonBLL.cs" />
+    <Compile Include="BusinessLayer\HogiadinhBLL.cs" />
+    <Compile Include="BusinessLayer\Interface\IChisodienBLL.cs" />
+    <Compile Include="BusinessLayer\Interface\ICongtodienBLL.cs" />
+    <Compile Include="BusinessLayer\Interface\IHoadonBLL.cs" />
+    <Compile Include="BusinessLayer\Interface\IHogiadinhBLL.cs" />
+    <Compile Include="BusinessLayer\Interface\INhanvienBLL.cs" />
+    <Compile Include="BusinessLayer\NhanvienBLL.cs" />
+    <Compile Include="DataAccessLayer\ChisodienDAL.cs" />
+    <Compile Include="DataAccessLayer\CongtodienDAL.cs" />
+    <Compile Include="DataAccessLayer\HoadonDAL.cs" />
+    <Compile Include="DataAccessLayer\HogiadinhDAL.cs" />
+    <Compile Include="DataAccessLayer\Interface\IChisodienDAL.cs" />
+    <Compile Include="DataAccessLayer\Interface\ICongtodienDAL.cs" />
+    <Compile Include="DataAccessLayer\Interface\IHoadonDAL.cs" />
+    <Compile Include="DataAccessLayer\Interface\IHogiadinhDAL.cs" />
+    <Compile Include="DataAccessLayer\Interface\INhanvienDAL.cs" />
+    <Compile Include="DataAccessLayer\NhanvienDAL.cs" />
+    <Compile Include="Entities\Chisodien.cs" />
+    <Compile Include="Entities\Congtodien.cs" />
+    <Compile Include="Entities\Hoadon.cs" />
+    <Compile Include="Entities\Hogiadinh.cs" />
+    <Compile Include="Entities\Nhanvien.cs" />
+    <Compile Include="Presenation\GDChiSoDien.cs" />
+    <Compile Include="Presenation\GDCongToDien.cs" />
+    <Compile Include="Presenation\GDHoaDon.cs" />
+    <Compile Include="Presenation\GDHoGiaDinh.cs" />
+    <Compile Include="Presenation\GDNhanVien.cs" />
+    <Compile Include="Presenation\GDThongKe.cs" />
+    <Compile Include="Presenation\GiaoDien.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

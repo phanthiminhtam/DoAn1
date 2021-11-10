@@ -1,0 +1,7 @@
+C:\Users\DELL\Documents\DoAn1\Do an 1\bin\Debug\Do an 1.exe.config
+C:\Users\DELL\Documents\DoAn1\Do an 1\bin\Debug\Do an 1.exe
+C:\Users\DELL\Documents\DoAn1\Do an 1\bin\Debug\Do an 1.pdb
+C:\Users\DELL\Documents\DoAn1\Do an 1\obj\Debug\Do an 1.csprojAssemblyReference.cache
+C:\Users\DELL\Documents\DoAn1\Do an 1\obj\Debug\Do an 1.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Documents\DoAn1\Do an 1\obj\Debug\Do an 1.exe
+C:\Users\DELL\Documents\DoAn1\Do an 1\obj\Debug\Do an 1.pdb
