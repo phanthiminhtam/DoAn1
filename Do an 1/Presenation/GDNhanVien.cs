@@ -71,13 +71,13 @@ namespace Do_an_1.Presenation
             Console.SetCursorPosition(13, 6); Console.WriteLine("║                                 Hiện Thông Tin Nhân Viên                                  ║");
             Console.SetCursorPosition(13, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════╝");
             List<Nhanvien> list = Nv.GetAllNhanvien();
-            Console.WriteLine("{0,-7}{1,-19}{2,-11}{3,-11}{4,-15}{5,-13}{6,-13}{7,-13}{8,-20}",
+            Console.WriteLine("{0,-8}{1,-20}{2,-12}{3,-16}{4,-16}{5,-13}{6,-14}{7,-14}{8,-20}",
                              "Mã NV", "Tên nhân viên", "Giới tính", "Ngày sinh", "Số điện thoại", "Số ngày lv", "Hệ số lương", "Tổng lương", "Chức vụ");
             foreach (var nv in list)
             {
-                Console.Write("{0,-7}{1,-19}{2,-11}", nv.Manv, nv.Tennv, nv.Gioitinh);
+                Console.Write("{0,-8}{1,-20}{2,-12}", nv.Manv, nv.Tennv, nv.Gioitinh);
                 Console.Write("{0:d}", nv.Ngaysinh);
-                Console.Write("{0,-4}{1,-15}{2,-13}{3,-13}{4,-13}{5,-20}", '\t',nv.Sdt, nv.Songaylv,nv.Hsl,nv.Tongluong, nv.Chucvu);
+                Console.Write("{0,-1}{1,-16}{2,-14}{3,-14}{4,-14}{5,-20}", '\t',nv.Sdt, nv.Songaylv,nv.Hsl,nv.Tongluong, nv.Chucvu);
                 Console.WriteLine("Nhấn enter để tiếp tục....");
             }
         }
@@ -101,20 +101,23 @@ namespace Do_an_1.Presenation
                 Nhanvien nv = new Nhanvien(list[i]);
                 Console.SetCursorPosition(14, 8); Console.Write("Tên nhân viên mới: ");
                 string ten = Console.ReadLine();
-                if (!string.IsNullOrEmpty(ten)) nv.Tennv = ten;
+                if (!string.IsNullOrEmpty(ten) && ten != nv.Tennv) nv.Tennv = ten;
                 Console.SetCursorPosition(14, 9); Console.Write("Giới tính : ");
-                string gt = Console.ReadLine(); nv.Gioitinh = gt;
+                string gt = Console.ReadLine();
+                if(gt != nv.Gioitinh) nv.Gioitinh = gt;
                 Console.SetCursorPosition(14, 10); Console.Write("Ngày sinh: ");
                 DateTime ns = DateTime.Parse(Console.ReadLine()); nv.Ngaysinh = ns;
                 Console.SetCursorPosition(14, 11); Console.Write("Số ngành làm việc: ");
-                int snlv = int.Parse(Console.ReadLine()); nv.Songaylv = snlv;
+                int snlv = int.Parse(Console.ReadLine()); 
+                if(snlv!= nv.Songaylv && snlv !=0)  nv.Songaylv = snlv;
                 Console.SetCursorPosition(14, 12); Console.Write("Chức vụ: ");
-                string cv= Console.ReadLine(); nv.Chucvu = cv ;
+                string cv= Console.ReadLine(); 
+                if(cv!= nv.Chucvu && cv != null)  nv.Chucvu = cv ;
                 Nv.Suanhanvien(nv);
             }
             else
             {
-                Console.SetCursorPosition(13, 8); Console.Write("----------> Khong ton tai ma ho nay <----------");
+                Console.SetCursorPosition(13, 8); Console.Write("----------> Không tồn tại mã nhân viên này! <----------");
                 Console.ReadKey();
             }
         }
@@ -151,16 +154,15 @@ namespace Do_an_1.Presenation
             Console.SetCursorPosition(15, 5); Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════╗");
             Console.SetCursorPosition(15, 6); Console.WriteLine("║                             Tìm kiếm Thông Tin Hộ Gia đình                                ║");
             Console.SetCursorPosition(15, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════╝");
-            List<Nhanvien> list = Nv.GetAllNhanvien();
-            int i;
+            Nhanvien nv = new Nhanvien();
             char c;
             while (true)
             {
-                Console.SetCursorPosition(15, 8); Console.Write("\nTìm mã_M,Tìm tên nhân viên_T,Tìm số ngày làm việc_N: ");
+                Console.SetCursorPosition(15, 8); Console.Write("\nTìm mã_M,Tìm tên nhân viên_T,Tìm giới tính_G: ");
                 try
                 {
                     c = Char.ToUpper(char.Parse(Console.ReadLine()));
-                    if (c == 'M' || c == 'T' || c == 'N')
+                    if (c == 'M' || c == 'T' || c == 'G')
                     {
                         break;
                     }
@@ -177,81 +179,33 @@ namespace Do_an_1.Presenation
             switch (c)
             {
                 case 'M':
-                    Console.SetCursorPosition(12, 11); Console.Write("----> Mời nhập mã muốn tìm: ");
-                    string Matim = Console.ReadLine();
-                    for (i = 0; i < list.Count; i++)
-                    {
-                        if (Matim == list[i].Manv)
-                        {
-                            break;
-                        }
-                    }
-                    if (i < list.Count)
-                    {
-                        Console.WriteLine("{0,-7}{1,-19}{2,-11}{3,-11}{4,-15}{5,-13}{6,-13}{7,-13}{8,-20}",
-                          "Mã NV", "Tên nhân viên", "Giới tính", "Ngày sinh", "Số điện thoại", "Số ngày lv", "Hệ số lương", "Tổng lương", "Chức vụ");
-                        Console.Write("{0,-7}{1,-19}{2,-11}", list[i].Manv, list[i].Tennv, list[i].Gioitinh);
-                        Console.Write("{0:d}", list[i].Ngaysinh);
-                        Console.Write("{0,-4}{1,-15}{2,-13}{3,-13}{4,-13}{5,-20}", '\t', list[i].Sdt, list[i].Songaylv, list[i].Hsl, list[i].Tongluong, list[i].Chucvu);
-                        Console.WriteLine("Nhấn enter để tiếp tục....");
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(15, 12); Console.Write("----------------> Không Tồn Tại Mã Nhân Viên Nay..... <----------------");
-                        Console.ReadKey();
-                    }
+                    Console.SetCursorPosition(12, 11); Console.Write("----> Mời nhập mã nhân viên muốn tìm: ");
+                    nv.Manv = Console.ReadLine();
                     break;
                 case 'T':
-
-                    Console.SetCursorPosition(12, 11); Console.Write("---------> Mời nhập tên muốn tìm: ");
-                    string ten = Console.ReadLine();
-                    for (i = 0; i < list.Count; i++)
-                    {
-                        if (ten == list[i].Tennv)
-                        {
-                            break;
-                        }
-                    }
-                    if (i < list.Count)
-                    {
-                        Console.WriteLine("{0,-7}{1,-19}{2,-11}{3,-11}{4,-15}{5,-13}{6,-13}{7,-13}{8,-20}",
-                         "Mã NV", "Tên nhân viên", "Giới tính", "Ngày sinh", "Số điện thoại", "Số ngày lv", "Hệ số lương", "Tổng lương", "Chức vụ");
-                        Console.Write("{0,-7}{1,-19}{2,-11}", list[i].Manv, list[i].Tennv, list[i].Gioitinh);
-                        Console.Write("{0:d}", list[i].Ngaysinh);
-                        Console.Write("{0,-4}{1,-15}{2,-13}{3,-13}{4,-13}{5,-20}", '\t', list[i].Sdt, list[i].Songaylv, list[i].Hsl, list[i].Tongluong, list[i].Chucvu);
-                        Console.WriteLine("Nhấn enter để tiếp tục....");
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(15, 12); Console.Write("----------------> Không Tồn Tại Tên Nhân Viên Nay..... <----------------");
-                        Console.ReadKey();
-                    }
+                    Console.SetCursorPosition(12, 11); Console.Write("---------> Mời nhập tên nhân viên muốn tìm: ");
+                    nv.Tennv = Console.ReadLine();
                     break;
-                case 'N':
-                    Console.SetCursorPosition(12, 11); Console.Write("---------> Mời nhập địa chỉ muốn tìm: ");
-                    int so = int.Parse(Console.ReadLine());
-                    for (i = 0; i < list.Count; i++)
-                    {
-                        if (so == list[i].Songaylv)
-                        {
-                            break;
-                        }
-                    }
-                    if (i < list.Count)
-                    {
-                        Console.WriteLine("{0,-7}{1,-19}{2,-11}{3,-11}{4,-15}{5,-13}{6,-13}{7,-13}{8,-20}",
-                         "Mã NV", "Tên nhân viên", "Giới tính", "Ngày sinh", "Số điện thoại", "Số ngày lv", "Hệ số lương", "Tổng lương", "Chức vụ");
-                        Console.Write("{0,-7}{1,-19}{2,-11}", list[i].Manv, list[i].Tennv, list[i].Gioitinh);
-                        Console.Write("{0:d}", list[i].Ngaysinh);
-                        Console.Write("{0,-4}{1,-15}{2,-13}{3,-13}{4,-13}{5,-20}", '\t', list[i].Sdt, list[i].Songaylv, list[i].Hsl, list[i].Tongluong, list[i].Chucvu);
-                        Console.WriteLine("Nhấn enter để tiếp tục....");
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(15, 12); Console.Write("----------------> Không Có Ai Làm Số Ngày Nay..... <----------------");
-                        Console.ReadKey();
-                    }
+                case 'G':
+                    Console.SetCursorPosition(12, 11); Console.Write("---------> Mời nhập giới tính muốn tìm: ");
+                    nv.Gioitinh = Console.ReadLine();
                     break;
+            }
+            if (Nv.TimNhanvien(nv).Count > 0)
+            {
+                Console.WriteLine("{0,-8}{1,-20}{2,-12}{3,-16}{4,-16}{5,-13}{6,-14}{7,-14}{8,-20}",
+                           "Mã NV", "Tên nhân viên", "Giới tính", "Ngày sinh", "Số điện thoại", "Số ngày lv", "Hệ số lương", "Tổng lương", "Chức vụ");
+                foreach (var a in Nv.TimNhanvien(nv))
+                {
+                    Console.Write("{0,-8}{1,-20}{2,-12}", a.Manv, a.Tennv, a.Gioitinh);
+                    Console.Write("{0:d}", a.Ngaysinh);
+                    Console.Write("{0,-1}{1,-16}{2,-14}{3,-14}{4,-14}{5,-20}", '\t', a.Sdt, a.Songaylv, a.Hsl, a.Tongluong, a.Chucvu);
+                    Console.WriteLine("Nhấn enter để tiếp tục....");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Không tồn tại thông tin đó!");
             }
         }
         public void MenuNV()

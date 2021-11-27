@@ -76,18 +76,25 @@ namespace Do_an_1.BusinessLayer
         {
             List<Congtodien> list = GetALLCongtodien();
             List<Congtodien> kq = new List<Congtodien>();
-            if (string.IsNullOrEmpty(ct.Mact) && string.IsNullOrEmpty(ct.Maho))
-            {
-                kq = list;
-            }
             //Tim theo mã
-            else if (ct.Maho != "")
+            if (ct.Mact != null &&  ct.Loaict == null )
             {
-                for (int i = 0; i < list.Count; ++i)
-                    if (list[i].Mact == ct.Mact)
+                foreach (Congtodien a in list)
+                    if (a.Mact.IndexOf(ct.Mact) >= 0)
                     {
-                        kq.Add(new Congtodien(list[i]));
+                        kq.Add(new Congtodien(a));
                     }
+            }
+            //Tim kiem theo loai
+            else if (ct.Mact == null && ct.Loaict != null)
+            {
+                foreach (Congtodien b in list)
+                {
+                    if (b.Loaict.IndexOf(ct.Loaict) >= 0)
+                    {
+                        kq.Add(new Congtodien(b));
+                    }
+                }
             }
             else kq = null;
             return kq;

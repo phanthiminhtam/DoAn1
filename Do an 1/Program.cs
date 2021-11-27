@@ -44,6 +44,35 @@ namespace Do_an_1
             Console.WriteLine("\t\t║║**║-║-║-║-║-║-║-║-║-║-║-║-║-║-║-║-║-║-║--║-║-║-║-║-║-║-║-║-║-║-║-║-║-║-║-║-║-║-║**║║");
             Console.WriteLine("\t\t╚════════════════════════════════════════════════════════════════════════════════════╝");
         }
+        public static string ReadPassword()
+        {
+            string pass = "";
+            ConsoleKeyInfo key;
+            do
+            {
+                key = Console.ReadKey(true);
+
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter) //không có dấu trống và không enter dừng 
+                {
+                    pass += key.KeyChar; //chuyển kí vừa nhập thành kiểu kí tự
+                    Console.Write("*"); //ghi sao
+                }
+                else
+                {
+                    if (key.Key == ConsoleKey.Backspace && pass.Length > 0)
+                    {
+                        pass = pass.Substring(0, (pass.Length - 1)); //Cắt phần tử cuối cùng 
+                        Console.Write("\b \b"); 
+                        //đầu tiên di chuyển dấu nháy trở lại, sau đó viết một ký tự khoảng trắng ghi đè lên ký tự cuối cùng và di chuyển dấu nháy về phía trước một lần nữa
+                    }
+                    else if (key.Key == ConsoleKey.Enter)
+                    {
+                        break;
+                    }
+                }
+            } while (true);
+            return pass;
+        }
         public static void Start()
         {
             while (true)
@@ -57,7 +86,8 @@ namespace Do_an_1
                 Console.SetCursorPosition(15, 13); Console.WriteLine("\t\t\t║              Mật Khẩu(Password) :                            ║");
                 Console.SetCursorPosition(15, 14); Console.WriteLine("\t\t\t╚══════════════════════════════════════════════════════════════╝");
                 Console.SetCursorPosition(65, 11); string TK = Console.ReadLine();
-                Console.SetCursorPosition(68, 13); string MK = Console.ReadLine();
+                Console.SetCursorPosition(68, 13); string MK = ReadPassword();
+
                 if(TK.ToUpper()=="DLTD" && MK.ToUpper()=="TD@123")
                 {
                     Console.SetCursorPosition(45, 15); Console.Write(">ĐĂNG NHẬP HỆ THỐNG THÀNH CÔNG<");
@@ -70,8 +100,7 @@ namespace Do_an_1
                 {
                     Console.SetCursorPosition(45, 15); Console.Write(">ĐĂNG NHẬP HỆ THỐNG THẤT BẠI<");
                     Console.ReadKey();
-                }
-                    
+                }                  
             }
         }
         static void Main(string[] args)

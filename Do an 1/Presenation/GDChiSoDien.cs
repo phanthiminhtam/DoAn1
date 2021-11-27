@@ -62,12 +62,12 @@ namespace Do_an_1.Presenation
             Console.SetCursorPosition(15, 6); Console.WriteLine("║                                 Hiện Thông Tin Chi Số Điện                                ║");
             Console.SetCursorPosition(15, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════╝");
             List<Chisodien> list = Cs.GetAllChisodien();
-            Console.WriteLine("{0,-8}{1,-15}{2,-15}{3,-17}{4,-15}", "Mã hộ", "Mã công tơ", "Thời gian", "Loại công tơ", "Chỉ số");
+            Console.WriteLine("{0,-8}{1,-15}{2,-17}{3,-15}{4,-15}", "Mã hộ", "Mã công tơ", "Thời gian", "Loại công tơ", "Chỉ số");
             foreach (var cs in list)
             {
                 Console.Write("{0,-8}{1,-15}", cs.Maho, cs.Mact);
                 Console.Write("{0:d}", cs.Thoigian);
-                Console.Write("{0,-4}{1,-15}{2,-15}","\t", cs.Loaict, cs.Chiso);
+                Console.Write("{0,-1}{1,-15}{2,-15}","\t", cs.Loaict, cs.Chiso);
                 Console.WriteLine("Nhấn enter để tiếp tục....");
             }
         }
@@ -79,7 +79,7 @@ namespace Do_an_1.Presenation
             Console.SetCursorPosition(15, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════╝");
             List<Chisodien> list = Cs.GetAllChisodien();
             int chisos;
-            Console.Write("Nhập chỉ số công tơ cần sửa: ");
+            Console.Write("Nhập chỉ số cần sửa: ");
             chisos = int.Parse(Console.ReadLine());
             int i;
             for (i = 0; i < list.Count; i++)
@@ -91,13 +91,17 @@ namespace Do_an_1.Presenation
                 Chisodien cs = new Chisodien(list[i]);
                 Console.SetCursorPosition(20, 8); Console.Write("Mã hộ gia đình mới: ");
                 string mh = Console.ReadLine();
-                if (!string.IsNullOrEmpty(mh)) cs.Maho = mh;
+                if (!string.IsNullOrEmpty(mh) && Cs.ExitMH(cs.Maho) && mh != cs.Maho) cs.Maho = mh;
                 Console.SetCursorPosition(20, 9); Console.Write("Thời gian mới: ");
                 DateTime tg = DateTime.Parse(Console.ReadLine()); cs.Thoigian = tg;
                 Console.SetCursorPosition(20, 10); Console.Write("Loại công tơ mới: ");
                 string loai = Console.ReadLine();
-                if (!string.IsNullOrEmpty(loai)) 
+                if (!string.IsNullOrEmpty(loai) && loai != cs.Loaict) 
                      cs.Loaict = loai;
+                Console.SetCursorPosition(20, 11); Console.Write("Chỉ số mới: ");
+                int csm = int.Parse(Console.ReadLine());
+                if (csm != 0 && csm != cs.Chiso)
+                    cs.Chiso = csm;
                 Cs.Suachiso(cs);
             }
         }

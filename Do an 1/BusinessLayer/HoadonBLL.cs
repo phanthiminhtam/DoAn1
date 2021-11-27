@@ -49,26 +49,46 @@ namespace Do_an_1.BusinessLayer
                 return true;
             return false;
         }
+        public DateTime Getit(Hoadon t)
+        {
+            string x = t.Thang.ToString() + '/' + t.Ngay.ToString() +  '/' + t.Nam.ToString();
+            DateTime h = Convert.ToDateTime(x);
+            return h;
+        }
+
+        public int VT(Hoadon t)
+        {
+            int d = 0;
+            for(int i=0;i< GetAllHoadon().Count;i++ )
+            {
+                if (Getit(t)> Getit(GetAllHoadon()[i]) && t.Maho==GetAllHoadon()[i].Maho && t.Loaict== GetAllHoadon()[i].Loaict)
+                    d++;
+            }
+            return d;
+        }
         public int Sodientruoc(Hoadon t)
         {
-            List<Hoadon> hd = GetAllHoadon();
-            foreach(Hoadon a in hd)
+            int d;
+            d = VT(t);
+            if (d == 0)
+                return 0;
+            else
             {
-                if (t.Mahd == a.Mahd && t.Thang == 1 && a.Thang == 12 && t.Nam == a.Nam + 1)
+                for (int i = d-1  ; i >= 0; i--)
                 {
-                    return a.Chiso;
+                    if (t.Maho ==GetAllHoadon()[i].Maho)
+                    {
+                        return GetAllHoadon()[i].Chiso;
+                    }
                 }
-                else if (t.Mahd == a.Mahd && t.Thang == a.Thang + 1 && t.Nam == a.Nam + 1)
-                {
-                    return a.Chiso;
-                }
-            }
+            }         
             return 0;
         }
         //sd<=50 : 1.678 ; sd<=100 : 1.734 ; sd <=200 : 2.014 ; sd <=300: 2.536 ; sd <=400 : 2.834 ; sd>400 : 2.947
         public double Tiendien(Hoadon t)
         {
-            int tg = t.Chiso - Sodientruoc(t);
+            int tg;
+            tg = t.Chiso - Sodientruoc(t);
             if (t.Loaict == "CTGD")
             {
                 if (tg <= 50)
@@ -132,18 +152,35 @@ namespace Do_an_1.BusinessLayer
         {
             List<Hoadon> list =GetAllHoadon();
             List<Hoadon> kq = new List<Hoadon>();
-            if (string.IsNullOrEmpty(hd.Maho) && string.IsNullOrEmpty(hd.Mact) && string.IsNullOrEmpty(hd.Mahd) && string.IsNullOrEmpty(hd.Tench) && string.IsNullOrEmpty(hd.Loaict))
+            if (hd.Maho != null && hd.Tench == null && hd.Mahd == null)
             {
-                kq = list;
-            }
-            //Tim theo mã
-            else if (hd.Mahd != "")
-            {
-                for (int i = 0; i < list.Count; ++i)
-                    if (list[i].Mahd == hd.Mahd)
+                foreach (Hoadon a in list)
+                    if (a.Maho.IndexOf(hd.Maho) >= 0)
                     {
-                        kq.Add(new Hoadon(list[i]));
+                        kq.Add(new Hoadon(a));
                     }
+            }
+            //Tim kiem theo ten 
+            else if (hd.Tench != null && hd.Mahd == null && hd.Maho == null)
+            {
+                foreach (Hoadon a in list)
+                {
+                    if (a.Tench.ToUpper().IndexOf(hd.Tench.ToUpper()) >= 0)
+                    {
+                        kq.Add(new Hoadon(a));
+                    }
+                }
+            }
+            else if (hd.Tench == null && hd.Mahd != null && hd.Maho == null)
+            {
+                foreach (Hoadon a in list)
+                {
+                    if (a.Mahd.ToUpper().IndexOf(hd.Mahd.ToUpper()) >= 0)
+                    {
+                        kq.Add(new Hoadon(a));
+                        break;
+                    }
+                }
             }
             else kq = null;
             return kq;

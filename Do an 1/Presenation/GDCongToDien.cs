@@ -64,7 +64,7 @@ namespace Do_an_1.Presenation
             {
                 Console.Write("{0,-8}{1,-15}{2,-15}", ct.Maho, ct.Mact, ct.Sosx);
                 Console.Write("{0:d}", ct.Ngayhd);
-                Console.Write("{0,-15}{1,-13}", '\t', ct.Loaict);
+                Console.Write("{0,-9}{1,-13}", '\t', ct.Loaict);
                 Console.WriteLine("Nhấn enter để tiếp tục....");
             }
         }
@@ -86,15 +86,17 @@ namespace Do_an_1.Presenation
             if (i < list.Count)
             {
                 Congtodien ct = new Congtodien(list[i]);
-                Console.SetCursorPosition(17, 8); Console.Write("Mã hộ gia đình mới: ");
+                Console.SetCursorPosition(17, 10); Console.Write("Mã hộ gia đình mới: ");
                 string mh = Console.ReadLine();
-                if (!string.IsNullOrEmpty(mh)) ct.Maho = mh;
-                Console.SetCursorPosition(17, 9); Console.Write("Số sản xuất mới: ");
-                int sx = int.Parse(Console.ReadLine()); ct.Sosx = sx;
-                Console.SetCursorPosition(17, 10); Console.Write("Ngày hoạt động mới: ");
+                if (!string.IsNullOrEmpty(mh) && mh != ct.Maho && Ct.ExitMH(ct.Maho))  ct.Maho = mh;
+                Console.SetCursorPosition(17, 11); Console.Write("Số sản xuất mới: ");
+                int sx = int.Parse(Console.ReadLine());
+                if(sx!=0 && sx != ct.Sosx)  ct.Sosx = sx;
+                Console.SetCursorPosition(17, 12); Console.Write("Ngày hoạt động mới: ");
                 DateTime nhd = DateTime.Parse(Console.ReadLine()); ct.Ngayhd = nhd;
-                Console.SetCursorPosition(17, 12); Console.Write("Loại công tơ mới: ");
-                string loai = Console.ReadLine(); ct.Loaict = loai;
+                Console.SetCursorPosition(17, 13); Console.Write("Loại công tơ mới: ");
+                string loai = Console.ReadLine();
+                if(!string.IsNullOrEmpty(loai) && loai != ct.Loaict) ct.Loaict = loai;
                 Ct.Suacongto(ct);
             }
         }
@@ -131,16 +133,15 @@ namespace Do_an_1.Presenation
             Console.SetCursorPosition(15, 5); Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════╗");
             Console.SetCursorPosition(15, 6); Console.WriteLine("║                             Tìm kiếm Thông Tin Công Tơ Điện                               ║");
             Console.SetCursorPosition(15, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════╝");
-            List<Congtodien> list = Ct.GetALLCongtodien();
-            int i;
+            Congtodien ct = new Congtodien();
             char c;
             while (true)
             {
-                Console.SetCursorPosition(15, 8); Console.Write("\nTìm mã_M,Tìm số sản xuất_S,Tìm loại_L: ");
+                Console.SetCursorPosition(15, 8); Console.Write("\nTìm mã_M,Tìm loại_L: ");
                 try
                 {
                     c = Char.ToUpper(char.Parse(Console.ReadLine()));
-                    if (c == 'M' || c == 'S' || c == 'L')
+                    if (c == 'M' || c == 'L')
                     {
                         break;
                     }
@@ -157,78 +158,29 @@ namespace Do_an_1.Presenation
             switch (c)
             {
                 case 'M':
-                    Console.SetCursorPosition(12, 11); Console.Write("----> Mời nhập mã muốn tìm: ");
-                    string Matim = Console.ReadLine();
-                    for (i = 0; i < list.Count; i++)
-                    {
-                        if (Matim == list[i].Mact)
-                        {
-                            break;
-                        }
-                    }
-                    if (i < list.Count)
-                    {
-                        Console.WriteLine("{0,-8}{1,-15}{2,-15}{3,-17}{4,-15}", "Mã hộ", "Mã công tơ", "Số sản xuất", "Ngày hoạt động", "Loại công tơ");
-                        Console.Write("{0,-8}{1,-15}{2,-15}", list[i].Maho, list[i].Mact, list[i].Sosx);
-                        Console.Write("{0:d}", list[i].Ngayhd);
-                        Console.Write("{0,-15}{1,-13}", '\t', list[i].Loaict);
-                        Console.WriteLine("Nhấn enter để tiếp tục....");
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(15, 12); Console.Write("----------------> Không Tồn Tại Mã Công Tơ Nay..... <----------------");
-                        Console.ReadKey();
-                    }
-                    break;
-                case 'S':
-
-                    Console.SetCursorPosition(12, 11); Console.Write("---------> Mời nhập số sản xuất muốn tìm: ");
-                    int so = int.Parse(Console.ReadLine());
-                    for (i = 0; i < list.Count; i++)
-                    {
-                        if (so == list[i].Sosx)
-                        {
-                            break;
-                        }
-                    }
-                    if (i < list.Count)
-                    {
-                        Console.WriteLine("{0,-8}{1,-15}{2,-15}{3,-17}{4,-15}", "Mã hộ", "Mã công tơ", "Số sản xuất", "Ngày hoạt động", "Loại công tơ");
-                        Console.Write("{0,-8}{1,-15}{2,-15}", list[i].Maho, list[i].Mact, list[i].Sosx);
-                        Console.Write("{0:d}", list[i].Ngayhd);
-                        Console.Write("{0,-15}{1,-13}", '\t', list[i].Loaict);
-                        Console.WriteLine("Nhấn enter để tiếp tục....");
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(15, 12); Console.Write("----------------> Không Tồn Tại Số Sản Xuất Nay..... <----------------");
-                        Console.ReadKey();
-                    }
+                    Console.SetCursorPosition(12, 11); Console.Write("---------> Mời nhập mã công tơ muốn tìm: ");
+                    ct.Mact = Console.ReadLine();
                     break;
                 case 'L':
-                    Console.SetCursorPosition(12, 11); Console.Write("---------> Mời nhập Loại muốn tìm: ");
-                    string l = Console.ReadLine();
-                    for (i = 0; i < list.Count; i++)
-                    {
-                        if (l == list[i].Loaict)
-                        {
-                            break;
-                        }
-                    }
-                    if (i < list.Count)
-                    {
-                        Console.WriteLine("{0,-8}{1,-15}{2,-15}{3,-17}{4,-15}", "Mã hộ", "Mã công tơ", "Số sản xuất", "Ngày hoạt động", "Loại công tơ");
-                        Console.Write("{0,-8}{1,-15}{2,-15}", list[i].Maho, list[i].Mact, list[i].Sosx);
-                        Console.Write("{0:d}", list[i].Ngayhd);
-                        Console.Write("{0,-15}{1,-13}", '\t', list[i].Loaict);
-                        Console.WriteLine("Nhấn enter để tiếp tục....");
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(15, 12); Console.Write("----------------> Không Tồn Tại Địa Chỉ Nay..... <----------------");
-                        Console.ReadKey();
-                    }
+                    Console.SetCursorPosition(12, 11); Console.Write("---------> Mời nhập loại công tơ muốn tìm: ");
+                    ct.Loaict = Console.ReadLine();
                     break;
+            }
+            Console.WriteLine();
+            if (Ct.Timcongto(ct).Count > 0)
+            {
+                Console.WriteLine("{0,-8}{1,-15}{2,-15}{3,-17}{4,-15}", "Mã hộ", "Mã công tơ", "Số sản xuất", "Ngày hoạt động", "Loại công tơ");
+                foreach (var a in Ct.Timcongto(ct))
+                {
+                    Console.Write("{0,-8}{1,-15}{2,-15}", a.Maho, a.Mact, a.Sosx);
+                    Console.Write("{0:d}", a.Ngayhd);
+                    Console.Write("{0,-9}{1,-13}", '\t', a.Loaict);
+                    Console.WriteLine("Nhấn enter để tiếp tục....");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Không tồn tại thông tin đó!");
             }
         }
         public void MenuCTD()
@@ -291,3 +243,4 @@ namespace Do_an_1.Presenation
         }
     }
 }
+

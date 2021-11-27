@@ -11,6 +11,7 @@ namespace Do_an_1.Presenation
 {
     public class GDThongKe
     {
+        private IHoadonBLL Hd = new HoadonBLL();
         public void MenuTK()
         {
             do
@@ -53,8 +54,9 @@ namespace Do_an_1.Presenation
                         Console.ReadKey();
                         break;
                     case '4':
-                        GDHoaDon hdn = new GDHoaDon();
-                       
+                        Console.WriteLine("\n\n\n\n");
+                        GDHoaDon cn = new GDHoaDon();
+                        cn.Thongke();
                         Console.ReadKey();
                         break;
                     case '5':

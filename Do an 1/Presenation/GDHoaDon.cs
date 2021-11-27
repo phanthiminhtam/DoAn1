@@ -41,7 +41,7 @@ namespace Do_an_1.Presenation
             {
                 Console.SetCursorPosition(20, 11); Console.Write("Mã hóa đơn: ");
                 hd.Mahd = Console.ReadLine();
-                if (hd.Mahd.Length == 5 && !Hd.ExitMH(hd.Mahd)) break;
+                if (hd.Mahd.Length == 5 && !Hd.ExitMHD(hd.Mahd)) break;
                 else
                     Console.WriteLine("Nhập lại mã hóa đơn!");
             }
@@ -57,14 +57,14 @@ namespace Do_an_1.Presenation
             }
             while (true)
             {
-                Console.SetCursorPosition(20, 15); Console.Write("Chỉ số: ");
+                Console.SetCursorPosition(20, 14); Console.Write("Chỉ số: ");
                 hd.Chiso = int.Parse(Console.ReadLine());
                 if (hd.Chiso>0) break;
                 Console.WriteLine("Nhập lại chỉ số điện hợp lệ !");
             }
             while(true)
             {
-                Console.SetCursorPosition(20, 16); Console.Write("Ngày: ");
+                Console.SetCursorPosition(20, 15); Console.Write("Ngày: ");
                 hd.Ngay = int.Parse(Console.ReadLine());
                 if (hd.Ngay >= 1 && hd.Ngay <= 31)
                     break;
@@ -73,15 +73,23 @@ namespace Do_an_1.Presenation
             }
             while (true)
             {
-                Console.SetCursorPosition(20, 17); Console.Write("Tháng: ");
+                Console.SetCursorPosition(20, 16); Console.Write("Tháng: ");
                 hd.Thang = int.Parse(Console.ReadLine());
                 if (hd.Thang >= 1 && hd.Thang <= 12)
                     break;
                 else
                     Console.WriteLine("Nhập lại năm!");
             }
-            Console.SetCursorPosition(20, 18); Console.Write("Năm: ");
+            Console.SetCursorPosition(20, 17); Console.Write("Năm: ");
             hd.Nam = int.Parse(Console.ReadLine());
+            while (true)
+            {
+                Console.SetCursorPosition(20, 18); Console.Write("Tình trạng: ");
+                hd.Tinhtrang = Console.ReadLine();
+                if (hd.Tinhtrang != " ") break;
+                else
+                    Console.WriteLine("Nhập lại tình trạng!");
+            }
             Hd.Themhoadon(hd);
         }
         public void Display()
@@ -92,14 +100,17 @@ namespace Do_an_1.Presenation
             Console.SetCursorPosition(15, 6); Console.WriteLine("║                                 Hiện Thông Tin Hóa Đơn                                    ║");
             Console.SetCursorPosition(15, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════╝");
             List<Hoadon> list = Hd.GetAllHoadon();
-            Console.WriteLine("{0,-11}{1,-7}{2,-7}{3,-7}{4,-17}{5,-14}{6,-6},{7,-7},{8,-6}{9,-8}{10,-15}{11,-20}", "Thời gian",
-                  "Mã hộ", "Mã công tơ", "Mã hóa đơn", "Tên chủ hộ", "Loại công tơ","Ngày" ,"Tháng","Năm","Chỉ số", "Tổng tiền","Tình trạng");
+            Console.WriteLine("{0,-7}{1,-15}{2,-12}{3,-14}{4,-20}{5,-16}{6,-17}{7,-8}{8,-12}{9,-15}", 
+                  "Mã hộ", "Thời gian", "Mã công tơ", "Mã hóa đơn", "Tên chủ hộ","Loại công tơ","Ngày/tháng/năm","Chỉ số","Tổng tiền","Tình trạng");
             foreach (var hd in list)
             {
-                Console.Write("{0:d}", hd.Ngaythang);
-                Console.Write("{0,-7}{1,-7}{2,-7}{3,-17}{4,-14}{5,-6},{6,-7},{7,-6}{8,-8}{9,-15}{10,-20}",
-                    hd.Maho , hd.Mact,hd.Mahd,hd.Tench,hd.Loaict,hd.Ngay,hd.Thang,hd.Nam,hd.Chiso,Hd.Tiendien(hd),hd.Tinhtrang);
-                Console.WriteLine("Nhấn enter để tiếp tục....");
+                Console.Write("{0,-7}", hd.Maho);
+                Console.Write("{0:d}\t", hd.Ngaythang);
+                Console.Write("{0,-12}{1,-12}{2,-20}{3,-16}",
+                    hd.Mact,hd.Mahd,hd.Tench,hd.Loaict);
+                Console.Write("{0:d}\t\t", Hd.Getit(hd));
+                Console.Write("{0,-8}{1,-12}{2,-15}", hd.Chiso, Hd.Tiendien(hd), hd.Tinhtrang);
+                Console.WriteLine("Nhấn enter để tiếp tục...."); 
             }
         }
         public void Correct()
@@ -110,27 +121,31 @@ namespace Do_an_1.Presenation
             Console.SetCursorPosition(15, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════╝");
             List<Hoadon> list = Hd.GetAllHoadon();
             string Masua;
-            Console.Write("Nhập mã công tơ cần sửa: ");
+            Console.Write("Nhập mã hóa đơn cần sửa: ");
             Masua = Console.ReadLine();
             int i;
             for (i = 0; i < list.Count; i++)
             {
-                if (list[i].Maho == Masua) break;
+                if (list[i].Mahd == Masua) break;
             }
             if (i < list.Count)
             {
                 Hoadon hd = new Hoadon(list[i]);
                 Console.SetCursorPosition(20, 8); Console.Write("Mã công tơ mới: ");
                 string mct = Console.ReadLine();
-                if (!string.IsNullOrEmpty(mct)) hd.Mact = mct;
+                if (!string.IsNullOrEmpty(mct) && mct!=hd.Mact) hd.Mact = mct;
                 Console.SetCursorPosition(20, 9); Console.Write("Mã hóa đơn mới: ");
                 string mhd = Console.ReadLine();
-                if (!string.IsNullOrEmpty(mhd)) hd.Mahd = mhd;
+                if (!string.IsNullOrEmpty(mhd) && mhd != hd.Mahd) hd.Mahd = mhd;
                 Console.SetCursorPosition(20, 10); Console.Write("Tên chủ hộ mới: ");
                 string ten = Console.ReadLine();
-                if (!string.IsNullOrEmpty(ten)) hd.Tench = ten;
+                if (!string.IsNullOrEmpty(ten) && ten != hd.Tench) hd.Tench = ten;
                 Console.SetCursorPosition(20, 11); Console.Write("Loại công tơ mới: ");
-                string loai = Console.ReadLine(); hd.Loaict = loai;
+                string loai = Console.ReadLine();
+                if(loai!=null && loai!= hd.Loaict)  hd.Loaict = loai;
+                Console.SetCursorPosition(20, 12); Console.Write("Chỉ số mới: ");
+                int c = int.Parse(Console.ReadLine()); 
+                if(c !=0 && c!= hd.Chiso) hd.Chiso=c;
                 Hd.Suahoadon(hd);
             }
         }
@@ -167,29 +182,82 @@ namespace Do_an_1.Presenation
             Console.SetCursorPosition(15, 5); Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════╗");
             Console.SetCursorPosition(15, 6); Console.WriteLine("║                             Tìm kiếm Thông Tin Hóa Đơn                                    ║");
             Console.SetCursorPosition(15, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════╝");
-            List<Hoadon> list = Hd.GetAllHoadon();
-            string Matim;
-            Console.Write("Nhập mã hóa đơn cần tìm: ");
-            Matim = Console.ReadLine();
-            int i;
-            for (i = 0; i < list.Count; i++)
+            Hoadon hd = new Hoadon();
+            char c;
+            while (true)
             {
-                if (list[i].Mahd == Matim) break;
+                Console.SetCursorPosition(15, 8); Console.Write("\nTìm mã hộ_M,Tìm tên chủ hộ_T,Tìm mã hóa đơn_D: ");
+                try
+                {
+                    c = Char.ToUpper(char.Parse(Console.ReadLine()));
+                    if (c == 'M' || c == 'T' || c == 'D')
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("-----------> Nhập lại cho đúng <-----------");
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Bạn nhập sai định dạng!");
+                }
             }
-            if (i < list.Count)
+            switch (c)
             {
-
-                Console.WriteLine("{0,-11}{1,-7}{2,-7}{3,-7}{4,-17}{5,-14}{6,-6},{7,-7},{8,-6}{9,-8}{10,-15}{11,-20}", "Thời gian",
-                   "Mã hộ", "Mã công tơ", "Mã hóa đơn", "Tên chủ hộ", "Loại công tơ", "Ngày", "Tháng", "Năm", "Chỉ số", "Tổng tiền", "Tình trạng");
-                Console.Write("{0:d}", list[i].Ngaythang);
-                Console.Write("{0,-7}{1,-7}{2,-7}{3,-17}{4,-14}{5,-6},{6,-7},{7,-6}{8,-8}{9,-15}{10,-20}",
-                   list[i].Maho, list[i].Mact, list[i].Mahd, list[i].Tench, list[i].Loaict, list[i].Ngay, list[i].Thang, list[i].Nam, list[i].Chiso, Hd.Tiendien(list[i]), list[i].Tinhtrang);
-                Console.WriteLine("Nhấn enter để tiếp tục....");
+                case 'M':
+                    Console.SetCursorPosition(12, 11); Console.Write("----> Mời nhập mã muốn tìm: ");
+                    hd.Maho = Console.ReadLine();
+                    break;
+                case 'T':
+                    Console.SetCursorPosition(12, 11); Console.Write("---------> Mời nhập tên muốn tìm: ");
+                    hd.Tench = Console.ReadLine();
+                    break;
+                case 'D':
+                    Console.SetCursorPosition(12, 11); Console.Write("---------> Mời nhập mã hóa đơn muốn tìm: ");
+                    hd.Mahd = Console.ReadLine();
+                    break;
+            }
+            Console.WriteLine();
+            if (Hd.TimHoadon(hd).Count > 0)
+            {
+                Console.WriteLine("{0,-7}{1,-15}{2,-12}{3,-14}{4,-20}{5,-16}{6,-17}{7,-8}{8,-12}{9,-15}",
+                    "Mã hộ", "Thời gian", "Mã công tơ", "Mã hóa đơn", "Tên chủ hộ", "Loại công tơ", "Ngày/tháng/năm", "Chỉ số", "Tổng tiền", "Tình trạng");
+                foreach (var a in Hd.TimHoadon(hd))
+                {
+                    Console.Write("{0,-7}", a.Maho);
+                    Console.Write("{0:d}\t", a.Ngaythang);
+                    Console.Write("{0,-12}{1,-12}{2,-20}{3,-16}",
+                        a.Mact, a.Mahd, a.Tench, a.Loaict);
+                    Console.Write("{0:d}\t\t", Hd.Getit(a));
+                    Console.Write("{0,-8}{1,-12}{2,-15}", a.Chiso, Hd.Tiendien(a), a.Tinhtrang);
+                    Console.WriteLine("Nhấn enter để tiếp tục....");
+                }
             }
             else
             {
-                Console.SetCursorPosition(13, 8); Console.Write("----------------> Không Tồn Tại Mã Hóa Đơn Nay.....<----------------");
-                Console.ReadKey();
+                Console.WriteLine("Không tồn tại thông tin đó!");
+            }
+        }
+        public void Thongke()
+        {
+            int i ;
+            List<Hoadon> list = Hd.GetAllHoadon();
+            for (i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine("{0,-7}{1,-15}{2,-12}{3,-14}{4,-20}{5,-16}{6,-17}{7,-8}{8,-12}{9,-15}",
+                    "Mã hộ", "Thời gian", "Mã công tơ", "Mã hóa đơn", "Tên chủ hộ", "Loại công tơ", "Ngày/tháng/năm", "Chỉ số", "Tổng tiền", "Tình trạng");
+                if (list[i].Tinhtrang.ToUpper() == "CHUA NOP")
+                {                
+                    Console.Write("{0,-7}", list[i].Maho);
+                    Console.Write("{0:d}\t", list[i].Ngaythang);
+                    Console.Write("{0,-12}{1,-12}{2,-20}{3,-16}",
+                        list[i].Mact, list[i].Mahd, list[i].Tench, list[i].Loaict);
+                    Console.Write("{0:d}\t\t", Hd.Getit(list[i]));
+                    Console.Write("{0,-8}{1,-12}{2,-15}", list[i].Chiso, Hd.Tiendien(list[i]), list[i].Tinhtrang);
+                    Console.WriteLine("Nhấn enter để tiếp tục....");
+                }
             }
         }
         public void MenuHD()
@@ -226,12 +294,12 @@ namespace Do_an_1.Presenation
                         Console.ReadKey();
                         break;
                     case '2':
-                        Correct();
+                        Delete();
                         Display();
                         Console.ReadKey();
                         break;
                     case '3':
-                        Delete();
+                        Correct();
                         Display();
                         Console.ReadKey();
                         break;
@@ -248,7 +316,6 @@ namespace Do_an_1.Presenation
                         t.Menu();
                         break;
                 }
-
             } while (true);
         }
     }

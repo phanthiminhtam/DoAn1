@@ -69,10 +69,6 @@ namespace Do_an_1.BusinessLayer
         {
             List<Hogiadinh> list = GetAllHogiadinh();
             List<Hogiadinh> kq = new List<Hogiadinh>();
-            if(ho.Maho== null && ho.Tench==null && ho.Diachi == null)
-            {
-                kq = list;
-            }
             //Tim theo mã
             if (ho.Maho != null && ho.Tench == null && ho.Diachi == null)
             {
@@ -87,18 +83,18 @@ namespace Do_an_1.BusinessLayer
             {
                 foreach (Hogiadinh hgd in list)
                 {
-                    if (hgd.Tench.IndexOf(ho.Tench) >= 0)
+                    if (hgd.Tench.ToUpper().IndexOf(ho.Tench.ToUpper()) >= 0)
                     {
                         kq.Add(new Hogiadinh(hgd));
                     }
                 }
             }
             //Tim kiem theo dia chi
-            else if (ho.Tench == null && ho.Diachi != null && ho.Maho != null)
+            else if (ho.Tench == null && ho.Diachi != null && ho.Maho == null)
             {
                 foreach (Hogiadinh hgd in list)
                 {
-                    if (hgd.Tench.IndexOf(ho.Diachi) >= 0)
+                    if (hgd.Diachi.ToUpper().Contains(ho.Diachi.ToUpper()))
                     {
                         kq.Add(new Hogiadinh(hgd));
                     }

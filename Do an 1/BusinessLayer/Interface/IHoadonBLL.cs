@@ -18,6 +18,7 @@ namespace Do_an_1.BusinessLayer.Interface
         bool ExitMHD(string Mahd);
         int Sodientruoc(Hoadon t);
         double Tiendien(Hoadon t);
+        DateTime Getit(Hoadon t);
         List<Hoadon> TimHoadon(Hoadon hd);
     }
 }

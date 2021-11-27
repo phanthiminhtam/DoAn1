@@ -10,8 +10,8 @@ namespace Do_an_1.Entities
     {
         private string manv;
         private string tennv;
-        private string gioitinh;
         private DateTime ngaysinh;
+        private string gioitinh;
         private string sdt;
         private int songaylv;
         private string chucvu;
@@ -90,14 +90,13 @@ namespace Do_an_1.Entities
         }
         public Nhanvien()
         {
-           
         }
         public Nhanvien(Nhanvien nv)
         {
             this.manv = nv.manv;
             this.tennv = nv.tennv;
-            this.gioitinh = nv.gioitinh;
             this.ngaysinh = nv.ngaysinh;
+            this.gioitinh = nv.gioitinh;
             this.sdt = nv.sdt;
             this.songaylv = nv.songaylv;
             this.hsl = nv.hsl;
@@ -105,12 +104,12 @@ namespace Do_an_1.Entities
             this.chucvu = nv.chucvu;
 
         }
-        public Nhanvien(string manv,string tennv,string gioitinh,DateTime ngaysinh,string sdt, int songaylv,float hsl,float tongluong, string chucvu)
+        public Nhanvien(string manv,string tennv,DateTime ngaysinh,string gioitinh,string sdt, int songaylv,float hsl,float tongluong, string chucvu)
         {
             this.manv = manv;
             this.tennv = tennv;
-            this.gioitinh = gioitinh;
             this.ngaysinh = ngaysinh;
+            this.gioitinh = gioitinh;         
             this.sdt = sdt;
             this.songaylv = songaylv;
             this.hsl = hsl;

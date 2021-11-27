@@ -34,7 +34,7 @@ namespace Do_an_1.DataAccessLayer
         public void Themhogiadinh(Hogiadinh ho)
         {
             StreamWriter fwrite = File.AppendText(Txtfile);
-            fwrite.WriteLine(ho.Maho + "#" + ho.Tench + "#" + ho.Diachi + "#" + ho.Gioitinh + "#" + ho.Ngaysinh+ "#" + ho.Sdt + "#" + ho.Sothe);
+            fwrite.WriteLine(ho.Maho + "#" + ho.Tench + "#" + ho.Diachi + "#" + ho.Gioitinh + "#" + ho.Ngaysinh.Month+ "/" + ho.Ngaysinh.Day + "/" + ho.Ngaysinh.Year + "#" + ho.Sdt + "#" + ho.Sothe);
             fwrite.Close();
         }
 

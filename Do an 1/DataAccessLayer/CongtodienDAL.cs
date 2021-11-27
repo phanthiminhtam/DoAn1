@@ -33,8 +33,7 @@ namespace Do_an_1.DataAccessLayer
         public void Themcongto(Congtodien ct)
         {
             StreamWriter fwrite = File.AppendText(Txtfile);
-            fwrite.WriteLine();
-            fwrite.Write(ct.Maho + "#" + ct.Mact + "#" + ct.Sosx + "#" + ct.Ngayhd + "#" + ct.Loaict);
+            fwrite.Write(ct.Maho + "#" + ct.Mact + "#" + ct.Sosx + "#" + ct.Ngayhd.Month+ "/" +ct.Ngayhd.Day + "/" + ct.Ngayhd.Year + "#" + ct.Loaict);
             fwrite.Close();
         }
 

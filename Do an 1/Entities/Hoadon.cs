@@ -8,8 +8,9 @@ namespace Do_an_1.Entities
 {
     public class Hoadon
     {
+        private string maho;
         private DateTime ngaythang;
-        private string maho, mact, mahd, tench, loaict;
+        private string mact, mahd, tench, loaict;
         private int ngay, thang, nam;
         private int chiso;
         private string tinhtrang;
@@ -94,7 +95,6 @@ namespace Do_an_1.Entities
         }
         public Hoadon()
         {
-            ngaythang = DateTime.Now;
         }
         public Hoadon(Hoadon hd)
         {
@@ -107,10 +107,10 @@ namespace Do_an_1.Entities
             this.chiso = hd.chiso;
             this.tinhtrang = hd.tinhtrang;
         }
-        public Hoadon(DateTime ngaythang, string maho,string mact,string mahd,string tench,string loaict,int ngay,int thang,int nam,int chiso,string tinhtrang)
+        public Hoadon(string maho, DateTime ngaythang, string mact,string mahd,string tench,string loaict,int ngay,int thang,int nam,int chiso,string tinhtrang)
         {
-            this.ngaythang = ngaythang;
             this.maho = maho;
+            this.ngaythang = ngaythang;
             this.mact = mact;
             this.mahd = mahd;
             this.tench = tench;

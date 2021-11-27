@@ -69,18 +69,36 @@ namespace Do_an_1.BusinessLayer
         {
             List<Nhanvien> list = GetAllNhanvien();
             List<Nhanvien> kq = new List<Nhanvien>();
-            if (string.IsNullOrEmpty(nv.Manv) && string.IsNullOrEmpty(nv.Tennv) && string.IsNullOrEmpty(nv.Gioitinh) && string.IsNullOrEmpty(nv.Chucvu))
-            {
-                kq = list;
-            }
             //Tim theo mã
-            else if (nv.Manv != "")
+            if (nv.Manv != null && nv.Tennv == null && nv.Gioitinh == null)
             {
-                for (int i = 0; i < list.Count; ++i)
-                    if (list[i].Manv == nv.Manv)
+                foreach (Nhanvien a in list)
+                    if (a.Manv.IndexOf(nv.Manv) >= 0)
                     {
-                        kq.Add(new Nhanvien(list[i]));
+                        kq.Add(new Nhanvien(a));
                     }
+            }
+            //Tim kiem theo ten 
+            else if (nv.Manv == null && nv.Tennv != null && nv.Gioitinh == null)
+            {
+                foreach (Nhanvien a in list)
+                {
+                    if (a.Tennv.ToUpper().IndexOf(nv.Tennv.ToUpper()) >= 0)
+                    {
+                        kq.Add(new Nhanvien(a));
+                    }
+                }
+            }
+            //Tim kiem theo giới tính
+            else if (nv.Manv == null && nv.Tennv == null && nv.Gioitinh != null)
+            {
+                foreach (Nhanvien a in list)
+                {
+                    if (a.Gioitinh.ToUpper().IndexOf(nv.Gioitinh.ToUpper())>=0)
+                    {
+                        kq.Add(new Nhanvien(a));
+                    }
+                }
             }
             else kq = null;
             return kq;

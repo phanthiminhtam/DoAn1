@@ -35,11 +35,11 @@ namespace Do_an_1.Presenation
             {
                 Console.SetCursorPosition(27, 10); Console.Write("Giới tính : ");
                 ho.Gioitinh= Console.ReadLine();
-                if (ho.Gioitinh.ToUpper() != "NAM" && ho.Gioitinh.ToUpper() != "NU")
+                if (ho.Gioitinh != "Nam" && ho.Gioitinh != "Nu")
                 {
                     Console.Write("Ban nhap sai moi nhap lai...");
                 }
-            } while (ho.Gioitinh != "NAM" && ho.Gioitinh != "NU");
+            } while (ho.Gioitinh != "Nam" && ho.Gioitinh != "Nu");
             Console.SetCursorPosition(27, 11); Console.Write("Ngày sinh: ");
             ho.Ngaysinh = DateTime.Parse(Console.ReadLine());
             Console.SetCursorPosition(27, 12); Console.Write("Địa chỉ: ");
@@ -90,30 +90,32 @@ namespace Do_an_1.Presenation
             Console.Write("Nhập mã hộ cần sửa: ");
             Masua = Console.ReadLine();
             int i;
-            for(i=0;i<list.Count;i++)
+            for (i = 0; i < list.Count; i++)
             {
                 if (list[i].Maho == Masua) break;
             }
-            if(i<list.Count)
+            if (i < list.Count)
             {
                 Hogiadinh ho = new Hogiadinh(list[i]);
                 Console.SetCursorPosition(14, 8); Console.Write("Tên chủ hộ mới: ");
                 string ten = Console.ReadLine();
-                if (!string.IsNullOrEmpty(ten)) ho.Tench = ten;
+                if (!string.IsNullOrEmpty(ten) && ten != ho.Tench) ho.Tench = ten;
                 Console.SetCursorPosition(14, 9); Console.Write("Giới tính : ");
-                string gt = Console.ReadLine(); ho.Gioitinh = gt;
-                Console.SetCursorPosition(14, 10); Console.Write("Địa chỉ: ");
-                string dc = Console.ReadLine(); if (!string.IsNullOrEmpty(dc)) ho.Diachi = dc;
+                string gt = Console.ReadLine();
+                if (!string.IsNullOrEmpty(gt) && gt != ho.Gioitinh) ho.Gioitinh = gt;
+                Console.SetCursorPosition(14, 10); Console.Write("Ngày sinh: ");
+                DateTime ns = DateTime.Parse(Console.ReadLine()); ho.Ngaysinh = ns;
                 Console.SetCursorPosition(14, 11); Console.Write("Số điện thoại: ");
-                string sodt = Console.ReadLine(); ho.Sdt = sodt;
-                Console.SetCursorPosition(14, 12); Console.Write("Số thẻ nộp tiền: ");
-                string sothent = Console.ReadLine(); ho.Sothe = sothent;
+                string sdt = Console.ReadLine();
+                if (!string.IsNullOrEmpty(sdt) && sdt != ho.Sdt) ho.Sdt = sdt;
+                Console.SetCursorPosition(14, 12); Console.Write("Số thẻ: ");
+                string st = Console.ReadLine();
+                if (!string.IsNullOrEmpty(st) && st != ho.Sothe) ho.Sothe = st;
                 Ho.Suahogiadinh(ho);
             }
             else
             {
-                Console.SetCursorPosition(13, 8); Console.Write("----------> Khong ton tai ma ho nay <----------");
-                Console.ReadKey();
+                Console.SetCursorPosition(13, 8); Console.Write("----------> Không tồn tại mã hộ này! <----------");
             }
         }
         public void Delete()
@@ -149,9 +151,8 @@ namespace Do_an_1.Presenation
             Console.SetCursorPosition(15, 5); Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════╗");
             Console.SetCursorPosition(15, 6); Console.WriteLine("║                             Tìm kiếm Thông Tin Hộ Gia đình                                ║");
             Console.SetCursorPosition(15, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════╝");
-            List<Hogiadinh> list = Ho.GetAllHogiadinh();
+            Hogiadinh ho = new Hogiadinh();
             char c;
-            int i;
             while (true)
             {
                 Console.SetCursorPosition(15, 8);Console.Write("\nTìm mã_M,Tìm tên chủ hộ_T,Tìm địa chỉ_D: ");
@@ -176,77 +177,32 @@ namespace Do_an_1.Presenation
             { 
                 case 'M':
                     Console.SetCursorPosition(12, 11); Console.Write("----> Mời nhập mã muốn tìm: ");
-                    string Matim = Console.ReadLine();
-                    for(i=0;i<list.Count;i++)
-                    {
-                        if(Matim == list[i].Maho)
-                        {
-                            break;
-                        }
-                    }
-                    if(i<list.Count)
-                    {
-                        Console.WriteLine("{0,-7}{1,-17}{2,-11}{3,-15}{4,-10}{5,-15}{6,-15}", "Mã hộ", "Tên chủ hộ", "Giới tính", "Ngày sinh", "Địa chỉ", "Số điện thoại", "Số thẻ nộp tiền");
-                        Console.Write("{0,-7}{1,-17}{2,-11}", list[i].Maho, list[i].Tench, list[i].Gioitinh);
-                        Console.Write("{0:d}", list[i].Ngaysinh);
-                        Console.Write("{0,-4}{1,-10}{2,-15}{3,-15}", '\t', list[i].Diachi, list[i].Sdt, list[i].Sothe);
-                        Console.WriteLine("Nhấn enter để tiếp tục...");        
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(15, 12); Console.Write("----------------> Không Tồn Tại Mã Hộ Nay..... <----------------");
-                        Console.ReadKey();
-                    }
+                    ho.Maho = Console.ReadLine();
                     break;
                 case 'T':
-
                     Console.SetCursorPosition(12, 11); Console.Write("---------> Mời nhập tên muốn tìm: ");
-                    string ten = Console.ReadLine();
-                    for (i = 0; i < list.Count; i++)
-                    {
-                        if (ten == list[i].Tench)
-                        {
-                            break;
-                        }
-                    }
-                    if (i < list.Count)
-                    {
-                        Console.WriteLine("{0,-7}{1,-17}{2,-11}{3,-15}{4,-10}{5,-15}{6,-15}", "Mã hộ", "Tên chủ hộ", "Giới tính", "Ngày sinh", "Địa chỉ", "Số điện thoại", "Số thẻ nộp tiền");
-                        Console.Write("{0,-7}{1,-17}{2,-11}", list[i].Maho, list[i].Tench, list[i].Gioitinh);
-                        Console.Write("{0:d}", list[i].Ngaysinh);
-                        Console.Write("{0,-4}{1,-10}{2,-15}{3,-15}", '\t', list[i].Diachi, list[i].Sdt, list[i].Sothe);
-                        Console.WriteLine("Nhấn enter để tiếp tục...");
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(15, 12); Console.Write("----------------> Không Tồn Tại Tên Hộ Nay..... <----------------");
-                        Console.ReadKey();
-                    }
+                    ho.Tench = Console.ReadLine();
                     break;
                 case 'D':
                     Console.SetCursorPosition(12, 11); Console.Write("---------> Mời nhập địa chỉ muốn tìm: ");
-                    string dc = Console.ReadLine();
-                    for (i = 0; i < list.Count; i++)
-                    {
-                        if (dc == list[i].Diachi)
-                        {
-                            break;
-                        }
-                    }
-                    if (i < list.Count)
-                    {
-                        Console.WriteLine("{0,-7}{1,-17}{2,-11}{3,-15}{4,-10}{5,-15}{6,-15}", "Mã hộ", "Tên chủ hộ", "Giới tính", "Ngày sinh", "Địa chỉ", "Số điện thoại", "Số thẻ nộp tiền");
-                        Console.Write("{0,-7}{1,-17}{2,-11}", list[i].Maho, list[i].Tench, list[i].Gioitinh);
-                        Console.Write("{0:d}", list[i].Ngaysinh);
-                        Console.Write("{0,-4}{1,-10}{2,-15}{3,-15}", '\t', list[i].Diachi, list[i].Sdt, list[i].Sothe);
-                        Console.WriteLine("Nhấn enter để tiếp tục...");
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(15, 12); Console.Write("----------------> Không Tồn Tại Địa Chỉ Nay..... <----------------");
-                        Console.ReadKey();
-                    }
+                    ho.Diachi = Console.ReadLine();
                     break;
+            }
+            Console.WriteLine();
+            if(Ho.Timho(ho).Count>0)
+            {
+                Console.WriteLine("\n{0,-7}{1,-17}{2,-11}{3,-15}{4,-10}{5,-15}{6,-15}", "Mã hộ", "Tên chủ hộ", "Giới tính", "Ngày sinh", "Địa chỉ", "Số điện thoại", "Số thẻ nộp tiền");
+                foreach (var a in Ho.Timho(ho))
+                {
+                    Console.Write("{0,-7}{1,-17}{2,-11}", a.Maho, a.Tench, a.Gioitinh);
+                    Console.Write("{0:d}", a.Ngaysinh);
+                    Console.Write("{0,-4}{1,-10}{2,-15}{3,-15}", '\t', a.Diachi, a.Sdt, a.Sothe);
+                    Console.WriteLine("Nhấn enter để tiếp tục..");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Không tồn tại thông tin đó!");
             }
         }
         public void MenuHGD()

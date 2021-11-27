@@ -22,7 +22,7 @@ namespace Do_an_1.DataAccessLayer
                 if (s != "")
                 {
                     string[] a = s.Split('#');
-                    list.Add(new Chisodien(a[0], a[1], a[2], DateTime.Parse(a[3]), int.Parse(a[4])));
+                    list.Add(new Chisodien(a[0], a[1],DateTime.Parse(a[2]),a[3], int.Parse(a[4])));
                 }
                 s = fread.ReadLine();
             }
@@ -33,7 +33,7 @@ namespace Do_an_1.DataAccessLayer
         {
             StreamWriter fwrite = File.AppendText(Txtfile);
             fwrite.WriteLine();
-            fwrite.Write(cs.Maho + "#" + cs.Mact + "#" + cs.Loaict + "#" + cs.Thoigian + "#" + cs.Chiso);
+            fwrite.Write(cs.Maho + "#" + cs.Mact + "#" +  cs.Thoigian.Month +"/" + cs.Thoigian.Day + "/"+ cs.Thoigian.Year + "#" + cs.Loaict + "#" + cs.Chiso);
             fwrite.Close();
         }
         public void Update(List<Chisodien> list)
@@ -41,7 +41,7 @@ namespace Do_an_1.DataAccessLayer
             StreamWriter fwrite = File.CreateText(Txtfile);
             for (int i = 0; i < list.Count; i++)
             {
-                fwrite.WriteLine(list[i].Maho + "#" + list[i].Mact + "#" + list[i].Loaict + "#" + list[i].Thoigian + "#" + list[i].Chiso);
+                fwrite.WriteLine(list[i].Maho + "#" + list[i].Mact+ "#" + list[i].Thoigian + "#" + list[i].Loaict + "#" + list[i].Chiso );
             }
             fwrite.Close();
         }

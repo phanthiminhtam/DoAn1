@@ -62,13 +62,13 @@ namespace Do_an_1.Entities
             this.chiso = cs.chiso;
 
         }
-        public Chisodien(string maho,string mact,string loaict,DateTime thoigian,int chiso)
+        public Chisodien(string maho,string mact,DateTime thoigian,string loaict,int chiso)
         {
             this.maho = maho;
             this.mact = mact;
-            this.loaict = loaict;
             this.thoigian = thoigian;
-            this.chiso = chiso;
+            this.loaict = loaict;
+            this.chiso = chiso;  
         }
     }
 }

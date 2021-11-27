@@ -22,7 +22,7 @@ namespace Do_an_1.DataAccessLayer
                 if (s != "")
                 {
                     string[] a = s.Split('#');
-                    list.Add(new Nhanvien(a[0], a[1], a[2], DateTime.Parse(a[3]),a[4], int.Parse(a[5]),float.Parse(a[6]),float.Parse(a[7]),a[8]));
+                    list.Add(new Nhanvien(a[0], a[1],DateTime.Parse(a[2]), a[3],a[4], int.Parse(a[5]),float.Parse(a[6]),float.Parse(a[7]),a[8]));
                 }
                 s = fread.ReadLine();
             }
@@ -34,7 +34,7 @@ namespace Do_an_1.DataAccessLayer
         {
             StreamWriter fwrite = File.AppendText(Txtfile);
             fwrite.WriteLine();
-            fwrite.Write(nv.Manv + "#" + nv.Tennv + "#" + nv.Gioitinh + "#" + nv.Ngaysinh + "#" + nv.Sdt + "#" + nv.Songaylv + "#"+ nv.Hsl + "#" + nv.Tongluong + "#" + nv.Chucvu);
+            fwrite.Write(nv.Manv + "#" + nv.Tennv + "#" + nv.Ngaysinh.Month+"/"+ nv.Ngaysinh.Day +"/"+ nv.Ngaysinh.Year + "#" + nv.Gioitinh + "#" +  nv.Sdt + "#" + nv.Songaylv + "#"+ nv.Hsl + "#" + nv.Tongluong + "#" + nv.Chucvu);
             fwrite.Close();
         }
 
@@ -43,7 +43,7 @@ namespace Do_an_1.DataAccessLayer
             StreamWriter fwrite = File.CreateText(Txtfile);
             for (int i = 0; i < list.Count; i++)
             {
-                fwrite.WriteLine(list[i].Manv + "#" + list[i].Tennv + "#" + list[i].Gioitinh + "#" + list[i].Ngaysinh + "#" + list[i].Sdt + "#" + list[i].Songaylv + "#" + list[i].Hsl + "#" + list[i].Tongluong + "#" + list[i].Chucvu);
+                fwrite.WriteLine(list[i].Manv + "#" + list[i].Tennv + "#"+ list[i].Ngaysinh + "#" + list[i].Gioitinh + "#" + list[i].Sdt + "#" + list[i].Songaylv + "#" + list[i].Hsl + "#" + list[i].Tongluong + "#" + list[i].Chucvu);
             }
             fwrite.Close();
         }
