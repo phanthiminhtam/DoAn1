@@ -15,9 +15,20 @@ namespace Do_an_1.BusinessLayer
     {
         private ICongtodienDAL ct = new CongtodienDAL();
         private IHogiadinhDAL ho = new HogiadinhDAL();
+        private ICongtodienDAL Ct = new CongtodienDAL();
         public List<Congtodien> GetALLCongtodien()
         {
             return ct.GetAllCongtodien();
+        }
+        public Congtodien GetCongtodien(string Mact)
+        {
+            List<Congtodien> congtodiens = Ct.GetAllCongtodien();
+            foreach (var a in congtodiens)
+            {
+                if (a.Mact == Mact)
+                    return a;
+            }
+            throw new Exception("Mã công tơ không tồn tại!");
         }
         public void Themcongto(Congtodien ct)
         {
@@ -40,6 +51,19 @@ namespace Do_an_1.BusinessLayer
             List<Congtodien> ct = GetALLCongtodien();
             if (ct.Find(m => m.Mact == Mact) != null)
                 return true;
+            return false;
+        }
+        public bool ExitGD(string Maho)
+        {
+            List<Congtodien> ct = GetALLCongtodien();
+            foreach(var a in ct)
+            {
+                if(a.Loaict== "CTGD")
+                {
+                    if (a.Maho == Maho)
+                        return true;
+                }
+            }
             return false;
         }
         public void Xoacongto(string Mact)
@@ -77,7 +101,7 @@ namespace Do_an_1.BusinessLayer
             List<Congtodien> list = GetALLCongtodien();
             List<Congtodien> kq = new List<Congtodien>();
             //Tim theo mã
-            if (ct.Mact != null &&  ct.Loaict == null )
+            if (ct.Mact != null &&  ct.Loaict == null && ct.Maho==null)
             {
                 foreach (Congtodien a in list)
                     if (a.Mact.IndexOf(ct.Mact) >= 0)
@@ -86,7 +110,7 @@ namespace Do_an_1.BusinessLayer
                     }
             }
             //Tim kiem theo loai
-            else if (ct.Mact == null && ct.Loaict != null)
+            else if (ct.Mact == null && ct.Loaict != null && ct.Maho == null)
             {
                 foreach (Congtodien b in list)
                 {
@@ -96,6 +120,16 @@ namespace Do_an_1.BusinessLayer
                     }
                 }
             }
+            else if(ct.Mact == null && ct.Loaict == null && ct.Maho != null)
+            {
+                foreach (Congtodien b in list)
+                {
+                    if (b.Maho.IndexOf(ct.Maho) >= 0)
+                    {
+                        kq.Add(b);
+                    }
+                }
+            }    
             else kq = null;
             return kq;
         }

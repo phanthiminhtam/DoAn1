@@ -97,20 +97,23 @@ namespace Do_an_1.Presenation
             if (i < list.Count)
             {
                 Hogiadinh ho = new Hogiadinh(list[i]);
-                Console.SetCursorPosition(14, 8); Console.Write("Tên chủ hộ mới: ");
+                Console.SetCursorPosition(14, 9); Console.Write("Tên chủ hộ mới: ");
                 string ten = Console.ReadLine();
                 if (!string.IsNullOrEmpty(ten) && ten != ho.Tench) ho.Tench = ten;
-                Console.SetCursorPosition(14, 9); Console.Write("Giới tính : ");
+                Console.SetCursorPosition(14, 10); Console.Write("Giới tính : ");
                 string gt = Console.ReadLine();
                 if (!string.IsNullOrEmpty(gt) && gt != ho.Gioitinh) ho.Gioitinh = gt;
-                Console.SetCursorPosition(14, 10); Console.Write("Ngày sinh: ");
+                Console.SetCursorPosition(14, 11); Console.Write("Ngày sinh: ");
                 DateTime ns = DateTime.Parse(Console.ReadLine()); ho.Ngaysinh = ns;
-                Console.SetCursorPosition(14, 11); Console.Write("Số điện thoại: ");
+                Console.SetCursorPosition(14, 12); Console.Write("Số điện thoại: ");
                 string sdt = Console.ReadLine();
                 if (!string.IsNullOrEmpty(sdt) && sdt != ho.Sdt) ho.Sdt = sdt;
-                Console.SetCursorPosition(14, 12); Console.Write("Số thẻ: ");
+                Console.SetCursorPosition(14, 13); Console.Write("Số thẻ: ");
                 string st = Console.ReadLine();
                 if (!string.IsNullOrEmpty(st) && st != ho.Sothe) ho.Sothe = st;
+                Console.SetCursorPosition(14, 14); Console.Write("Địa chỉ: ");
+                string dc = Console.ReadLine();
+                if (!string.IsNullOrEmpty(dc) && dc != ho.Diachi) ho.Diachi = dc;
                 Ho.Suahogiadinh(ho);
             }
             else
@@ -205,6 +208,23 @@ namespace Do_an_1.Presenation
                 Console.WriteLine("Không tồn tại thông tin đó!");
             }
         }
+        public int Thongke()
+        {
+            Console.Clear();
+            List<Hogiadinh> list = Ho.GetAllHogiadinh();
+            Console.SetCursorPosition(20, 5); Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.SetCursorPosition(20, 6); Console.WriteLine("║                             Thống Kê Số Hộ Gia Đình Sử Dụng Điện                          ║");
+            Console.SetCursorPosition(20, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════╝");
+            int dem = 0;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (dem < list.Count)
+                {
+                    dem++;
+                }  
+            }
+            return dem;
+        }
         public void MenuHGD()
         {
             do
@@ -225,7 +245,7 @@ namespace Do_an_1.Presenation
                 Console.SetCursorPosition(20, 17); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
                 Console.SetCursorPosition(20, 18); Console.WriteLine("\t\t\t║               5.Tìm kiếm Thông Tin Hộ Gia Đình               ║");
                 Console.SetCursorPosition(20, 19); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
-                Console.SetCursorPosition(20, 20); Console.WriteLine("\t\t\t║               6.Quay lại màn hình chính                      ║");
+                Console.SetCursorPosition(20, 20); Console.WriteLine("\t\t\t║               6.Quay Lại Màn Hình Chính                      ║");
                 Console.SetCursorPosition(20, 21); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
                 Console.SetCursorPosition(20, 22); Console.WriteLine("\t\t\t║  Mời Bạn Chọn Chức Năng :                                    ║");
                 Console.SetCursorPosition(20, 23); Console.WriteLine("\t\t\t╚══════════════════════════════════════════════════════════════╝");

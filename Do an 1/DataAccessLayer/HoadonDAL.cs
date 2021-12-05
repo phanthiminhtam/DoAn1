@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 using Do_an_1.Entities;
 using System.IO;
 using Do_an_1.DataAccessLayer.Interface;
+using Do_an_1.BusinessLayer;
+using Do_an_1.BusinessLayer.Interface;
+
 
 namespace Do_an_1.DataAccessLayer
 {
     class HoadonDAL : IHoadonDAL
     {
         private string Txtfile = "C:/Users/DELL/Documents/DoAn1/Hoadon.txt";
+        private IHogiadinhBLL Ho = new HogiadinhBLL();
         public List<Hoadon> GetAllHoadon()
         {
             List<Hoadon> list = new List<Hoadon>();
@@ -22,7 +26,7 @@ namespace Do_an_1.DataAccessLayer
                 if (s != "")
                 {
                     string[] a = s.Split('#');
-                    list.Add(new Hoadon(a[0],DateTime.Parse(a[1]), a[2], a[3], a[4], a[5], int.Parse(a[6]), int.Parse(a[7]), int.Parse(a[8]), int.Parse(a[9]),a[10]));
+                    list.Add(new Hoadon(a[0],DateTime.Parse(a[1]), a[2], a[3],a[4],double.Parse(a[5]),a[6]));
                 }
                 s = fread.ReadLine();
             }
@@ -32,10 +36,10 @@ namespace Do_an_1.DataAccessLayer
 
         public void Themhoadon(Hoadon hd)
         {
+            Hogiadinh h = Ho.GetHogiadinh(hd.Maho);
             StreamWriter fwrite = File.AppendText(Txtfile);
             fwrite.WriteLine();
-            fwrite.Write(hd.Maho + "#" + hd.Ngaythang.Month +"/"+ hd.Ngaythang.Day+ "/" + hd.Ngaythang.Year + "#" + hd.Mact + "#" + hd.Mahd + "#" + hd.Tench + "#" + hd.Loaict + "#" + hd.Ngay 
-                + "#" + hd.Thang + "#" + hd.Nam + "#" + hd.Chiso + "#" + hd.Tinhtrang );
+            fwrite.Write(hd.Maho + "#" + hd.Ngaythang.Month+"/"+hd.Ngaythang.Day+"/"+hd.Ngaythang.Year + "#" +hd.Mahd + "#" + h.Tench + "#" + h.Sothe + "#" + hd.Tt + "#" + hd.Tinhtrang);
             fwrite.Close();
         }
 
@@ -44,8 +48,7 @@ namespace Do_an_1.DataAccessLayer
             StreamWriter fwrite = File.CreateText(Txtfile);
             for (int i = 0; i < list.Count; i++)
             {
-                fwrite.WriteLine(list[i].Maho + "#" + list[i].Ngaythang + "#" + list[i].Mact + "#" + list[i].Mahd + "#" + list[i].Tench + "#" + list[i].Loaict + "#" + list[i].Ngay 
-                    + "/" + list[i].Thang + "/" + list[i].Nam + "#" + list[i].Chiso + "#" + list[i].Tinhtrang);
+                fwrite.WriteLine(list[i].Maho + "#" + list[i].Ngaythang.Month+"/"+list[i].Ngaythang.Day+"/"+ list[i].Ngaythang.Year + "#" +list[i].Mahd + "#" + list[i].Tench + "#" + list[i].Sothe + "#" + list[i].Tt + "#" +list[i].Tinhtrang);
             }
             fwrite.Close();
         }

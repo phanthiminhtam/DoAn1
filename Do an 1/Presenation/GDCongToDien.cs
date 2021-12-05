@@ -14,43 +14,62 @@ namespace Do_an_1.Presenation
         private ICongtodienBLL Ct = new CongtodienBLL();
         public void Input()
         {
-            Console.Clear();
-            Console.SetCursorPosition(15, 5); Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════╗");
-            Console.SetCursorPosition(15, 6); Console.WriteLine("║                          Thêm Thông Tin Công Tơ Điện                      ║");
-            Console.SetCursorPosition(15, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════╝");
-            Congtodien ct = new Congtodien();
             while (true)
             {
-                Console.SetCursorPosition(20, 8); Console.Write("Mã hộ gia đình: ");
-                ct.Maho = Console.ReadLine();
-                if (ct.Maho.Length == 5 && Ct.ExitMH(ct.Maho))
-                    break;
-                else
-                    Console.WriteLine("Nhập lại mã hộ!");
+                Console.Clear();
+                Console.SetCursorPosition(15, 5); Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════╗");
+                Console.SetCursorPosition(15, 6); Console.WriteLine("║                          Thêm Thông Tin Công Tơ Điện                      ║");
+                Console.SetCursorPosition(15, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════╝");
+                Congtodien ct = new Congtodien();
+                while (true)
+                {
+                    Console.SetCursorPosition(20, 8); Console.Write("Mã hộ gia đình: ");
+                    ct.Maho = Console.ReadLine();
+                    if (ct.Maho.Length == 5 && Ct.ExitMH(ct.Maho))
+                        break;
+                    else
+                        Console.WriteLine("Nhập lại mã hộ!");
+                }
+                while (true)
+                {
+                    Console.SetCursorPosition(20, 9); Console.Write("Mã công tơ: ");
+                    ct.Mact = Console.ReadLine();
+                    if (ct.Mact.Length == 5 && !Ct.ExitMCT(ct.Mact))
+                        break;
+                    else
+                        Console.WriteLine("Nhập lại mã công tơ!");
+                }
+                while (true)
+                {
+                    Console.SetCursorPosition(20, 10); Console.Write("Loại công tơ: ");
+                    ct.Loaict = Console.ReadLine();               
+                    if (ct.Loaict.ToUpper() == "CTKD" || ct.Loaict.ToUpper() == "CTGD")
+                        break;
+                    else
+                        Console.WriteLine("Nhập lại loại công tơ!");
+                }
+                if (ct.Loaict.ToUpper() == "CTGD")
+                {
+                    if (Ct.ExitGD(ct.Maho) == true)
+                    {
+                        Console.SetCursorPosition(0, 14); Console.WriteLine("Hộ đã tồn tại công tơ điện này!");
+                        Console.SetCursorPosition(0, 15); Console.Write("--->Bạn có muốn nhập CTKD hay không Y/N!: ");
+                        string t = Console.ReadLine();
+                        if (t.ToUpper() == "N") break;
+                        else
+                            ct.Loaict = "CTKD";
+                    }
+                }
+                Console.SetCursorPosition(20, 11); Console.Write("Số sản xuất: ");
+                ct.Sosx = int.Parse(Console.ReadLine());
+
+                Console.SetCursorPosition(20, 12); Console.Write("Ngày hoạt động: ");
+                ct.Ngayhd = DateTime.Parse(Console.ReadLine());
+                Ct.Themcongto(ct);
+                Console.SetCursorPosition(0, 16); Console.Write("Bạn có muốn nhập tiếp hay không Y/N!: ");
+                string kt = Console.ReadLine();
+                if (kt.ToUpper() == "N") break;
             }
-            while (true)
-            {
-                Console.SetCursorPosition(20, 9); Console.Write("Mã công tơ: ");
-                ct.Mact = Console.ReadLine();
-                if (ct.Mact.Length == 5 && !Ct.ExitMCT(ct.Mact))
-                    break;
-                else
-                    Console.WriteLine("Nhập lại mã công tơ!");
-            }
-            Console.SetCursorPosition(20, 10); Console.Write("Số sản xuất: ");
-            ct.Sosx = int.Parse(Console.ReadLine());
-            Console.SetCursorPosition(20, 11); Console.Write("Ngày hoạt động: ");
-            ct.Ngayhd = DateTime.Parse(Console.ReadLine());
-            while (true)
-            {
-                Console.SetCursorPosition(20, 12); Console.Write("Loại công tơ: ");
-                ct.Loaict = Console.ReadLine();
-                if (ct.Loaict.ToUpper() == "CTGD" || ct.Loaict.ToUpper() == "CTKD")
-                    break;
-                else
-                    Console.WriteLine("Nhập lại loại công tơ!");
-            }
-            Ct.Themcongto(ct);
         }
         public void Display()
         {
@@ -65,7 +84,7 @@ namespace Do_an_1.Presenation
                 Console.Write("{0,-8}{1,-15}{2,-15}", ct.Maho, ct.Mact, ct.Sosx);
                 Console.Write("{0:d}", ct.Ngayhd);
                 Console.Write("{0,-9}{1,-13}", '\t', ct.Loaict);
-                Console.WriteLine("Nhấn enter để tiếp tục....");
+                Console.WriteLine("Nhấn enter để tiếp tục..");
             }
         }
         public void Correct()
@@ -175,13 +194,30 @@ namespace Do_an_1.Presenation
                     Console.Write("{0,-8}{1,-15}{2,-15}", a.Maho, a.Mact, a.Sosx);
                     Console.Write("{0:d}", a.Ngayhd);
                     Console.Write("{0,-9}{1,-13}", '\t', a.Loaict);
-                    Console.WriteLine("Nhấn enter để tiếp tục....");
+                    Console.WriteLine("Nhấn enter để tiếp tục..");
                 }
             }
             else
             {
                 Console.WriteLine("Không tồn tại thông tin đó!");
             }
+        }
+        public int Thongke()
+        {
+            Console.Clear();
+            List<Congtodien> list = Ct.GetALLCongtodien();
+            Console.SetCursorPosition(20, 5); Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.SetCursorPosition(20, 6); Console.WriteLine("║                                   Thống Kê Số Công Tơ Điện                                ║");
+            Console.SetCursorPosition(20, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════╝");
+            int dem = 0;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (dem < list.Count)
+                {
+                    dem++;
+                }
+            }
+            return dem;
         }
         public void MenuCTD()
         {
@@ -203,7 +239,7 @@ namespace Do_an_1.Presenation
                 Console.SetCursorPosition(20, 17); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
                 Console.SetCursorPosition(20, 18); Console.WriteLine("\t\t\t║               5.Tìm kiếm Thông Tin Công Tơ Điện              ║");
                 Console.SetCursorPosition(20, 19); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
-                Console.SetCursorPosition(20, 20); Console.WriteLine("\t\t\t║               6.Quay lại màn hình chính                      ║");
+                Console.SetCursorPosition(20, 20); Console.WriteLine("\t\t\t║               6.Quay Lại Màn Hình Chính                      ║");
                 Console.SetCursorPosition(20, 21); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
                 Console.SetCursorPosition(20, 22); Console.WriteLine("\t\t\t║  Mời Bạn Chọn Chức Năng :                                    ║");
                 Console.SetCursorPosition(20, 23); Console.WriteLine("\t\t\t╚══════════════════════════════════════════════════════════════╝");

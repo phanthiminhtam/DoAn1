@@ -78,7 +78,7 @@ namespace Do_an_1.Presenation
                 Console.Write("{0,-8}{1,-20}{2,-12}", nv.Manv, nv.Tennv, nv.Gioitinh);
                 Console.Write("{0:d}", nv.Ngaysinh);
                 Console.Write("{0,-1}{1,-16}{2,-14}{3,-14}{4,-14}{5,-20}", '\t',nv.Sdt, nv.Songaylv,nv.Hsl,nv.Tongluong, nv.Chucvu);
-                Console.WriteLine("Nhấn enter để tiếp tục....");
+                Console.WriteLine("Nhấn enter để tiếp tục..");
             }
         }
         public void Correct()
@@ -200,7 +200,7 @@ namespace Do_an_1.Presenation
                     Console.Write("{0,-8}{1,-20}{2,-12}", a.Manv, a.Tennv, a.Gioitinh);
                     Console.Write("{0:d}", a.Ngaysinh);
                     Console.Write("{0,-1}{1,-16}{2,-14}{3,-14}{4,-14}{5,-20}", '\t', a.Sdt, a.Songaylv, a.Hsl, a.Tongluong, a.Chucvu);
-                    Console.WriteLine("Nhấn enter để tiếp tục....");
+                    Console.WriteLine("Nhấn enter để tiếp tục..");
                 }
             }
             else
@@ -228,7 +228,7 @@ namespace Do_an_1.Presenation
                 Console.SetCursorPosition(20, 17); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
                 Console.SetCursorPosition(20, 18); Console.WriteLine("\t\t\t║               5.Tìm kiếm Thông Tin Nhân Viên                 ║");
                 Console.SetCursorPosition(20, 19); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
-                Console.SetCursorPosition(20, 20); Console.WriteLine("\t\t\t║               6.Quay lại màn hình chính                      ║");
+                Console.SetCursorPosition(20, 20); Console.WriteLine("\t\t\t║               6.Quay Lại Màn Hình Chính                      ║");
                 Console.SetCursorPosition(20, 21); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
                 Console.SetCursorPosition(20, 22); Console.WriteLine("\t\t\t║  Mời Bạn Chọn Chức Năng :                                    ║");
                 Console.SetCursorPosition(20, 23); Console.WriteLine("\t\t\t╚══════════════════════════════════════════════════════════════╝");

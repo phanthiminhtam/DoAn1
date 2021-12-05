@@ -24,9 +24,9 @@ namespace Do_an_1.Presenation
                 Console.SetCursorPosition(20, 9);  Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
                 Console.SetCursorPosition(20, 10); Console.WriteLine("\t\t\t║               1.Thống Kê Hộ Sử Dụng Điện                     ║");
                 Console.SetCursorPosition(20, 11); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
-                Console.SetCursorPosition(20, 12); Console.WriteLine("\t\t\t║               2.Thống Kê Chỉ Số Điện                         ║");
+                Console.SetCursorPosition(20, 12); Console.WriteLine("\t\t\t║               2.Thống Kê Số Công Tơ Điện                     ║");
                 Console.SetCursorPosition(20, 13); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
-                Console.SetCursorPosition(20, 14); Console.WriteLine("\t\t\t║               3.Thống Kê Hóa Đơn Điện                        ║");
+                Console.SetCursorPosition(20, 14); Console.WriteLine("\t\t\t║               3.Thống Kê Hộ Đã Đóng Tiền                     ║");
                 Console.SetCursorPosition(20, 15); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
                 Console.SetCursorPosition(20, 16); Console.WriteLine("\t\t\t║               4.Thống Kê Hộ Chưa Đóng Tiền                   ║");
                 Console.SetCursorPosition(20, 17); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
@@ -40,23 +40,24 @@ namespace Do_an_1.Presenation
                 {
                     case '1':
                         GDHoGiaDinh ho = new GDHoGiaDinh();
-                        ho.Display();
+                        Console.SetCursorPosition(0, 9); Console.WriteLine("Số hộ gia đình sử dụng điện: {0}",ho.Thongke());
                         Console.ReadKey();
                         break;
                     case '2':
-                        GDChiSoDien cs = new GDChiSoDien();
-                        cs.Display();
+                        GDCongToDien ct = new GDCongToDien();
+                        Console.SetCursorPosition(0, 9); Console.WriteLine("Số công tơ đang sử dụng: {0}", ct.Thongke());
                         Console.ReadKey();
                         break;
                     case '3':
-                        GDHoaDon hd = new GDHoaDon();
-                        hd.Display();
+                        Console.WriteLine("\n\n\n\n");
+                        GDHoaDon dd = new GDHoaDon();
+                        dd.Thongked();
                         Console.ReadKey();
                         break;
                     case '4':
                         Console.WriteLine("\n\n\n\n");
-                        GDHoaDon cn = new GDHoaDon();
-                        cn.Thongke();
+                        GDHoaDon cd = new GDHoaDon();
+                        cd.Thongkec();
                         Console.ReadKey();
                         break;
                     case '5':

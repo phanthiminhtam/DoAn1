@@ -18,6 +18,16 @@ namespace Do_an_1.BusinessLayer
         {
             return ho.GetAllHogiadinh();
         }
+        public Hogiadinh GetHogiadinh(string Maho)
+        {
+            List<Hogiadinh> hogiadinhs = ho.GetAllHogiadinh();
+            foreach(var a in hogiadinhs)
+            {
+                if (a.Maho == Maho)
+                    return a;
+            }
+            throw new Exception("Hộ gia đình không tồn tại!");
+        }
         public void Themhogiadinh(Hogiadinh ho)
         {
             if (!string.IsNullOrEmpty(ho.Tench))

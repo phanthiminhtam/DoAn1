@@ -10,10 +10,11 @@ namespace Do_an_1.Entities
     {
         private string maho;
         private DateTime ngaythang;
-        private string mact, mahd, tench, loaict;
-        private int ngay, thang, nam;
-        private int chiso;
+        private string mahd, tench;
+        private string sothe;
+        private double tt;
         private string tinhtrang;
+
         public string Maho
         {
             get { return maho; }
@@ -32,24 +33,6 @@ namespace Do_an_1.Entities
                     tench = value;
             }
         }
-        public string Loaict
-        {
-            get { return loaict; }
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                    loaict = value;
-            }
-        }
-        public string Mact
-        {
-            get { return mact; }
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                    mact = value;
-            }
-        }
         public string Mahd
         {
             get { return mahd; }
@@ -64,25 +47,19 @@ namespace Do_an_1.Entities
             get { return ngaythang; }
             set { ngaythang = value; }
         }
-        public int Chiso
+        public string Sothe
         {
-            get { return chiso; }
-            set { chiso = value; }
+            get { return sothe; }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                    sothe = value;
+            }
         }
-        public int Ngay
+        public double Tt
         {
-            get { return ngay; }
-            set { ngay = value; }
-        }
-        public int Thang
-        {
-            get { return thang; }
-            set { thang = value; }
-        }
-        public int Nam
-        {
-            get { return nam; }
-            set { nam = value; }
+            get { return tt; }
+            set { tt = value; }
         }
         public string Tinhtrang
         {
@@ -99,27 +76,24 @@ namespace Do_an_1.Entities
         public Hoadon(Hoadon hd)
         {
             this.maho = hd.maho;
-            this.mact = hd.mact;
             this.mahd = hd.mahd;
             this.tench = hd.tench;
-            this.loaict = hd.loaict;
             this.ngaythang = hd.ngaythang;
-            this.chiso = hd.chiso;
+            this.sothe = hd.sothe;
+            this.tt = hd.tt;
             this.tinhtrang = hd.tinhtrang;
+
         }
-        public Hoadon(string maho, DateTime ngaythang, string mact,string mahd,string tench,string loaict,int ngay,int thang,int nam,int chiso,string tinhtrang)
+        public Hoadon(string maho, DateTime ngaythang,string mahd,string tench,string sothe,double tt,string tinhtrang)
         {
             this.maho = maho;
             this.ngaythang = ngaythang;
-            this.mact = mact;
             this.mahd = mahd;
             this.tench = tench;
-            this.loaict = loaict;
-            this.chiso = chiso;
-            this.ngay = ngay;
-            this.nam = nam;
-            this.thang = thang;
+            this.sothe = sothe;
+            this.tt = tt;
             this.tinhtrang = tinhtrang;
+       
         }
     }
 }

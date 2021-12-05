@@ -43,7 +43,7 @@ namespace Do_an_1.DataAccessLayer
             StreamWriter fwrite = File.CreateText(Txtfile);
             for (int i = 0; i < list.Count; i++)
             {
-                fwrite.WriteLine(list[i].Manv + "#" + list[i].Tennv + "#"+ list[i].Ngaysinh + "#" + list[i].Gioitinh + "#" + list[i].Sdt + "#" + list[i].Songaylv + "#" + list[i].Hsl + "#" + list[i].Tongluong + "#" + list[i].Chucvu);
+                fwrite.WriteLine(list[i].Manv + "#" + list[i].Tennv + "#"+ list[i].Ngaysinh.Month + "/" + list[i].Ngaysinh.Day + "/" + list[i].Ngaysinh.Year + "#" + list[i].Gioitinh + "#" + list[i].Sdt + "#" + list[i].Songaylv + "#" + list[i].Hsl + "#" + list[i].Tongluong + "#" + list[i].Chucvu);
             }
             fwrite.Close();
         }

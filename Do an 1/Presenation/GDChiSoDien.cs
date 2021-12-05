@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Do_an_1.Entities;
-using Do_an_1.BusinessLayer;
+﻿using Do_an_1.BusinessLayer;
 using Do_an_1.BusinessLayer.Interface;
+using Do_an_1.Entities;
+using System;
+using System.Collections.Generic;
 
 namespace Do_an_1.Presenation
 {
     public class GDChiSoDien
     {
         private IChisodienBLL Cs = new ChisodienBLL();
+        private ICongtodienBLL Ct = new CongtodienBLL();
         public void Input()
         {
             Console.Clear();
@@ -21,37 +19,38 @@ namespace Do_an_1.Presenation
             Chisodien cs = new Chisodien();
             while (true)
             {
-                Console.SetCursorPosition(20, 8); Console.Write("Mã hộ gia đình: ");
-                cs.Maho = Console.ReadLine();
-                if (cs.Maho.Length == 5 && Cs.ExitMH(cs.Maho)) break;
-                else
-                    Console.WriteLine("Nhập lại mã hộ!");
-            }
-            while (true)
-            {
                 Console.SetCursorPosition(20, 9); Console.Write("Mã công tơ: ");
                 cs.Mact = Console.ReadLine();
-                if (cs.Mact.Length == 5 && Cs.ExitMCT(cs.Mact)) break;
-                else
-                    Console.WriteLine("Nhập lại mã công tơ!");
+                try
+                {
+                    Congtodien ct = Ct.GetCongtodien(cs.Mact);
+                    break;
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
-            Console.SetCursorPosition(20, 10); Console.Write("Thời gian:  ");
+            Console.SetCursorPosition(20, 10); Console.Write("Thời gian chốt số:  ");
             cs.Thoigian = DateTime.Parse(Console.ReadLine());
+            if (cs.Thoigian.Month == 1)
+            {
+                cs.Thang = 12;
+                cs.Nam = cs.Thoigian.Year - 1;
+            }
+            else
+            {
+                cs.Thang = cs.Thoigian.Month - 1;
+                cs.Nam = cs.Thoigian.Year;
+            }
             while (true)
             {
-                Console.SetCursorPosition(20, 11); Console.Write("Loại công tơ: ");
-                cs.Loaict = Console.ReadLine();
-                if (cs.Loaict == "CTGD" || cs.Loaict == "CTKD") break;
-                else
-                    Console.WriteLine("Nhập lại loại công tơ !");
-            }
-            while(true)
-            {
-                Console.SetCursorPosition(20, 12); Console.Write("Chỉ số: ");
+                Console.SetCursorPosition(20, 11); Console.Write("Chỉ số điện: ");
                 cs.Chiso = int.Parse(Console.ReadLine());
                 if (cs.Chiso >=0) break;
                 Console.WriteLine("Nhập lại chỉ số điện mới!");
             }
+            cs.Tinhtien = Cs.Tiendien(cs);
             Cs.Themchiso(cs);
         }
         public void Display()
@@ -62,13 +61,16 @@ namespace Do_an_1.Presenation
             Console.SetCursorPosition(15, 6); Console.WriteLine("║                                 Hiện Thông Tin Chi Số Điện                                ║");
             Console.SetCursorPosition(15, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════╝");
             List<Chisodien> list = Cs.GetAllChisodien();
-            Console.WriteLine("{0,-8}{1,-15}{2,-17}{3,-15}{4,-15}", "Mã hộ", "Mã công tơ", "Thời gian", "Loại công tơ", "Chỉ số");
+            Console.WriteLine("|{0,-8}|{1,-12}|{2,-17}|{3,-12}|{4,-15}|{5,-10}|{6,-15}|","Mã hộ","Mã công tơ", "Thời gian", "Tháng/Năm", "Loại công tơ", "Chỉ số","Tiền điện");
+            Congtodien c;
             foreach (var cs in list)
             {
-                Console.Write("{0,-8}{1,-15}", cs.Maho, cs.Mact);
-                Console.Write("{0:d}", cs.Thoigian);
-                Console.Write("{0,-1}{1,-15}{2,-15}","\t", cs.Loaict, cs.Chiso);
-                Console.WriteLine("Nhấn enter để tiếp tục....");
+                c = Ct.GetCongtodien(cs.Mact);
+                Console.Write("|{0,-8}|{1,-12}|",c.Maho,cs.Mact);
+                Console.Write("{0:d}\t|", cs.Thoigian);
+                Console.Write("{0}/{1,-10}|", cs.Thang, cs.Nam);
+                Console.Write("{0,-15}|{1,-10}|{2,-15}|", c.Loaict, cs.Chiso,cs.Tinhtien);
+                Console.WriteLine("Nhấn enter để tiếp tục..");
             }
         }
         public void Correct()
@@ -78,30 +80,30 @@ namespace Do_an_1.Presenation
             Console.SetCursorPosition(15, 6); Console.WriteLine("║                                  Sửa Thông Tin Chỉ Số Điện                                ║");
             Console.SetCursorPosition(15, 7); Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════╝");
             List<Chisodien> list = Cs.GetAllChisodien();
-            int chisos;
-            Console.Write("Nhập chỉ số cần sửa: ");
-            chisos = int.Parse(Console.ReadLine());
+            string mact;
+            Console.Write("Nhập mã công tơ: ");
+            mact = Console.ReadLine();
             int i;
             for (i = 0; i < list.Count; i++)
             {
-                if (list[i].Chiso == chisos) break;
+                if (list[i].Mact == mact) break;
             }
             if (i < list.Count)
             {
                 Chisodien cs = new Chisodien(list[i]);
-                Console.SetCursorPosition(20, 8); Console.Write("Mã hộ gia đình mới: ");
-                string mh = Console.ReadLine();
-                if (!string.IsNullOrEmpty(mh) && Cs.ExitMH(cs.Maho) && mh != cs.Maho) cs.Maho = mh;
-                Console.SetCursorPosition(20, 9); Console.Write("Thời gian mới: ");
-                DateTime tg = DateTime.Parse(Console.ReadLine()); cs.Thoigian = tg;
-                Console.SetCursorPosition(20, 10); Console.Write("Loại công tơ mới: ");
-                string loai = Console.ReadLine();
-                if (!string.IsNullOrEmpty(loai) && loai != cs.Loaict) 
-                     cs.Loaict = loai;
+                Console.SetCursorPosition(20, 9); Console.Write("Mã công tơ mới: ");
+                string mct = Console.ReadLine();
+                if (mct != cs.Mact && Cs.ExitMCT(cs.Mact)) cs.Mact = mct;
+                Console.SetCursorPosition(20, 10); Console.Write("Thời gian mới: ");
+                DateTime tg = DateTime.Parse(Console.ReadLine()); cs.Thoigian = tg;         
                 Console.SetCursorPosition(20, 11); Console.Write("Chỉ số mới: ");
                 int csm = int.Parse(Console.ReadLine());
                 if (csm != 0 && csm != cs.Chiso)
+                {
                     cs.Chiso = csm;
+                   
+                }
+                cs.Tinhtien = Cs.Tiendien(cs);
                 Cs.Suachiso(cs);
             }
         }
@@ -150,7 +152,7 @@ namespace Do_an_1.Presenation
                 Console.SetCursorPosition(20, 15); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
                 Console.SetCursorPosition(20, 16); Console.WriteLine("\t\t\t║               4.Hiển Thị Thông Tin Chỉ Số Điện               ║");
                 Console.SetCursorPosition(20, 17); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
-                Console.SetCursorPosition(20, 18); Console.WriteLine("\t\t\t║               5.Quay lại màn hình chính                      ║");
+                Console.SetCursorPosition(20, 18); Console.WriteLine("\t\t\t║               5.Quay Lại Màn Hình Chính                      ║");
                 Console.SetCursorPosition(20, 19); Console.WriteLine("\t\t\t╠══════════════════════════════════════════════════════════════╣");
                 Console.SetCursorPosition(20, 20); Console.WriteLine("\t\t\t║  Mời Bạn Chọn Chức Năng :                                    ║");
                 Console.SetCursorPosition(20, 21); Console.WriteLine("\t\t\t╚══════════════════════════════════════════════════════════════╝");

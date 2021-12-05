@@ -99,8 +99,10 @@ namespace Do_an_1
                 else
                 {
                     Console.SetCursorPosition(45, 15); Console.Write(">ĐĂNG NHẬP HỆ THỐNG THẤT BẠI<");
+                  
                     Console.ReadKey();
-                }                  
+                }    
+                
             }
         }
         static void Main(string[] args)

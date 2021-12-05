@@ -13,11 +13,22 @@ namespace Do_an_1.BusinessLayer
     class HoadonBLL : IHoadonBLL
     {
         private IHoadonDAL hd = new HoadonDAL();
-        private IHogiadinhDAL ho = new HogiadinhDAL();
-        private ICongtodienDAL ct = new CongtodienDAL();
+        private IHogiadinhDAL ho = new HogiadinhDAL();   
+        private IChisodienDAL cs = new ChisodienDAL();
+       
         public List<Hoadon> GetAllHoadon()
         {
             return hd.GetAllHoadon();
+        }
+        public Hoadon GetHoaDon(string Maho,DateTime Ngaythang)
+        {
+            List<Hoadon> hoadons = hd.GetAllHoadon();
+            foreach (var a in hoadons)
+            {
+                if (a.Maho == Maho && a.Ngaythang.Month == Ngaythang.Month && a.Ngaythang.Year == Ngaythang.Year)
+                    return a;
+            }
+            throw new Exception("Hóa đơn không tồn tại!");
         }
         public void Themhoadon(Hoadon hd)
         {
@@ -35,13 +46,6 @@ namespace Do_an_1.BusinessLayer
                 return true;
             return false;
         }
-        public bool ExitMCT(string Mact)
-        {
-            List<Congtodien> ds = ct.GetAllCongtodien();
-            if (ds.Find(m => m.Mact == Mact) != null)
-                return true;
-            return false;
-        }
         public bool ExitMHD(string Mahd)
         {
             List<Hoadon> hd = GetAllHoadon();
@@ -49,74 +53,22 @@ namespace Do_an_1.BusinessLayer
                 return true;
             return false;
         }
-        public DateTime Getit(Hoadon t)
+        public double Tongtien(string Maho, DateTime Ngaythang)
         {
-            string x = t.Thang.ToString() + '/' + t.Ngay.ToString() +  '/' + t.Nam.ToString();
-            DateTime h = Convert.ToDateTime(x);
-            return h;
-        }
-
-        public int VT(Hoadon t)
-        {
-            int d = 0;
-            for(int i=0;i< GetAllHoadon().Count;i++ )
+            List<Chisodien> ds = cs.GetAllChisodien();
+            double tt = 0;
+            bool check = false;
+            for(int i=ds.Count-1;i>=0;i--)
             {
-                if (Getit(t)> Getit(GetAllHoadon()[i]) && t.Maho==GetAllHoadon()[i].Maho && t.Loaict== GetAllHoadon()[i].Loaict)
-                    d++;
+                if (ds[i].Maho == Maho && ds[i].Thoigian.Month == Ngaythang.Month && ds[i].Thoigian.Year == Ngaythang.Year)
+                {
+                    check = true;
+                    tt += ds[i].Tinhtien;
+                }
+                else if (check == true)
+                    break;
             }
-            return d;
-        }
-        public int Sodientruoc(Hoadon t)
-        {
-            int d;
-            d = VT(t);
-            if (d == 0)
-                return 0;
-            else
-            {
-                for (int i = d-1  ; i >= 0; i--)
-                {
-                    if (t.Maho ==GetAllHoadon()[i].Maho)
-                    {
-                        return GetAllHoadon()[i].Chiso;
-                    }
-                }
-            }         
-            return 0;
-        }
-        //sd<=50 : 1.678 ; sd<=100 : 1.734 ; sd <=200 : 2.014 ; sd <=300: 2.536 ; sd <=400 : 2.834 ; sd>400 : 2.947
-        public double Tiendien(Hoadon t)
-        {
-            int tg;
-            tg = t.Chiso - Sodientruoc(t);
-            if (t.Loaict == "CTGD")
-            {
-                if (tg <= 50)
-                {
-                    return (tg * 1.678);
-                }
-                else if (tg <= 100)
-                {
-                    return 50 * 1.678 + (tg - 50) * 1.734;
-                }
-                else if (tg <= 200)
-                {
-                    return 50 * 1.678 + (100 - 50) * 1.734 + (tg - 100) * 2.014;
-                }
-                else if (tg <= 300)
-                {
-                    return 50 * 1.678 + (100 - 50) * 1.734 + (200 - 100) * 2.014 + (tg - 200) * 2.536;
-                }
-                else if (tg <= 400)
-                {
-                    return 50 * 1.678 + (100 - 50) * 1.734 + (200 - 100) * 2.014 + (300 - 200) * 2.536 + (tg - 300) * 2.834;
-                }
-                else
-                {
-                    return 50 * 1.678 + (100 - 50) * 1.734 + (200 - 100) * 2.014 + (300 - 200) * 2.536 + (400 - 300) * 2.834 + (tg - 400) * 2.947;
-                }
-            }
-            return tg * 2.666 * 1.1;
+            return tt;
         }
         public void Xoahoadon(string Mahd)
         {
@@ -132,55 +84,33 @@ namespace Do_an_1.BusinessLayer
             else
                 throw new Exception("------------>Khong ton tai ma hoa don nay<-------------");
         }
-        public void Suahoadon(Hoadon hd)
+        public void Suatinhtrang(Hoadon hd , int thang, int nam)
         {
             int i;
             List<Hoadon> list = GetAllHoadon();
             for (i = 0; i < list.Count; ++i)
-                if (list[i].Mahd == hd.Mahd) break;
+                if (list[i].Maho == hd.Maho && list[i].Ngaythang.Month == thang && list[i].Ngaythang.Year == nam) break;
             if (i < list.Count)
             {
                 list.RemoveAt(i);
+                hd.Tinhtrang = "Da Nop";
                 list.Add(hd);
                 this.hd.Update(list);
             }
             else
-                throw new Exception("------------->Khong ton tai ma hoa don nay<------------");
+                throw new Exception("------------->Khong ton tai ma cong to nay<------------");
         }
-
         public List<Hoadon> TimHoadon(Hoadon hd)
         {
-            List<Hoadon> list =GetAllHoadon();
+            List<Hoadon> list = GetAllHoadon();
             List<Hoadon> kq = new List<Hoadon>();
-            if (hd.Maho != null && hd.Tench == null && hd.Mahd == null)
+            if (hd.Maho != null )
             {
                 foreach (Hoadon a in list)
                     if (a.Maho.IndexOf(hd.Maho) >= 0)
                     {
                         kq.Add(new Hoadon(a));
                     }
-            }
-            //Tim kiem theo ten 
-            else if (hd.Tench != null && hd.Mahd == null && hd.Maho == null)
-            {
-                foreach (Hoadon a in list)
-                {
-                    if (a.Tench.ToUpper().IndexOf(hd.Tench.ToUpper()) >= 0)
-                    {
-                        kq.Add(new Hoadon(a));
-                    }
-                }
-            }
-            else if (hd.Tench == null && hd.Mahd != null && hd.Maho == null)
-            {
-                foreach (Hoadon a in list)
-                {
-                    if (a.Mahd.ToUpper().IndexOf(hd.Mahd.ToUpper()) >= 0)
-                    {
-                        kq.Add(new Hoadon(a));
-                        break;
-                    }
-                }
             }
             else kq = null;
             return kq;

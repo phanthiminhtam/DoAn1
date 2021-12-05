@@ -22,7 +22,7 @@ namespace Do_an_1.DataAccessLayer
                 if (s != "")
                 {
                     string[] a = s.Split('#');
-                    list.Add(new Congtodien(a[0], a[1], int.Parse(a[2]), DateTime.Parse(a[3]), a[4]));
+                    list.Add(new Congtodien(a[0], a[1],int.Parse(a[2]),DateTime.Parse(a[3]), a[4]));
                 }
                 s = fread.ReadLine();
             }
@@ -33,7 +33,7 @@ namespace Do_an_1.DataAccessLayer
         public void Themcongto(Congtodien ct)
         {
             StreamWriter fwrite = File.AppendText(Txtfile);
-            fwrite.Write(ct.Maho + "#" + ct.Mact + "#" + ct.Sosx + "#" + ct.Ngayhd.Month+ "/" +ct.Ngayhd.Day + "/" + ct.Ngayhd.Year + "#" + ct.Loaict);
+            fwrite.Write(ct.Maho + "#" + ct.Mact + "#" +ct.Sosx + "#" + ct.Ngayhd.Month+"/"+ct.Ngayhd.Day+"/"+ct.Ngayhd.Year + "#" + ct.Loaict);
             fwrite.Close();
         }
 
@@ -42,7 +42,7 @@ namespace Do_an_1.DataAccessLayer
             StreamWriter fwrite = File.CreateText(Txtfile);
             for (int i = 0; i < list.Count; i++)
             {
-                fwrite.WriteLine(list[i].Maho + "#" + list[i].Mact + "#" + list[i].Sosx + "#" + list[i].Ngayhd + "#" + list[i].Loaict);
+                fwrite.WriteLine(list[i].Maho + "#" + list[i].Mact + "#" +list[i].Sosx + "#" + list[i].Ngayhd.Month+"/"+list[i].Ngayhd.Day+"/"+list[i].Ngayhd.Year + "#" + list[i].Loaict);
             }
             fwrite.Close();
         }

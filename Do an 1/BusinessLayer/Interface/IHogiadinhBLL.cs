@@ -10,6 +10,7 @@ namespace Do_an_1.BusinessLayer.Interface
     public interface IHogiadinhBLL
     {
         List<Hogiadinh> GetAllHogiadinh();
+        Hogiadinh GetHogiadinh(string Maho);
         void Themhogiadinh(Hogiadinh ho);
         void Xoahogiadinh(string Maho);
         void Suahogiadinh(Hogiadinh ho);

@@ -12,13 +12,11 @@ namespace Do_an_1.BusinessLayer.Interface
         List<Hoadon> GetAllHoadon();
         void Themhoadon(Hoadon hd);
         void Xoahoadon(string Mahd);
-        void Suahoadon(Hoadon hd);
         bool ExitMH(string Maho);
-        bool ExitMCT(string Mact);
         bool ExitMHD(string Mahd);
-        int Sodientruoc(Hoadon t);
-        double Tiendien(Hoadon t);
-        DateTime Getit(Hoadon t);
+        void Suatinhtrang(Hoadon hd,int thang,int nam);
+        Hoadon GetHoaDon(string Maho, DateTime Ngaythang);
+        double Tongtien(string Maho, DateTime Ngaythang);
         List<Hoadon> TimHoadon(Hoadon hd);
     }
 }
